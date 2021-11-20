@@ -7,5 +7,6 @@ public class VaccineCenter {
     public String centerLocation;
     public String centerDay;
     public String centerTime;
-    public String vaccineSupply;
+    public String vaccineSupplyName;
+    public String vaccineSupplyCount;
 }

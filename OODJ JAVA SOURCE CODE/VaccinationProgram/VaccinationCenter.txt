@@ -1,0 +1,3 @@
+SBJ/Stadium Bukit Jalil/Mon-Fri/9.00am-6.00pm/Pfizer/9000
+WTCKL/World Trade Center KL/Mon-Sun/9.00am-6.00pm/AstraZeneca/1000
+SSA/Stadium Shah Alam/Mon-Fri/8.00am-6.00pm/Sinovac/2000

@@ -61,7 +61,7 @@ public class FrmAddRegistrationPeople extends javax.swing.JFrame {
 
         jLabel2.setText("Full Name :");
 
-        jLabel3.setText("IC/PAssport No:");
+        jLabel3.setText("IC/Passport No:");
 
         jLabel4.setText("Select:");
 
@@ -247,7 +247,7 @@ public class FrmAddRegistrationPeople extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(peopleRegistrationHealthStatusYesRadioBtn)
                     .addComponent(peopleRegistrationHealthStatusNoRadioBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)

@@ -153,9 +153,9 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="peopleRegistrationHealthStatusYesRadioBtn" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="peopleRegistrationHealthStatusNoRadioBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="peopleRegistrationHealthStatusNoRadioBtn" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
@@ -186,7 +186,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="IC/PAssport No:"/>
+        <Property name="text" type="java.lang.String" value="IC/Passport No:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
