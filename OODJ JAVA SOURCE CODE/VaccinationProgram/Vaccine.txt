@@ -1,0 +1,3 @@
+pfizer/Pfizer Bio N Tech/USA/2
+az/AstraZeneca/UK/2
+sinovac/Sinovac/China/2
