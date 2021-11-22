@@ -1,1 +1,2 @@
-APT0001/3 Dec 2021/Stadium Bukit Jalil (SBJ)/Pfizer/0121231234
+APT1;03-12-2021;Stadium Bukit Jalil (SBJ);Pfizer;0121231234
+APT2;26-11-2021;World Trade Center KL (WTCKL);AstraZeneca;0176871218;

@@ -1,8 +1,11 @@
 
 package VaccinationProgram;
 
+import java.io.File;
 
-public class People extends User {
+
+public class People extends User{
+    
     private String icOrPassport;
     private Boolean citizenship;
     private String dob;
@@ -12,6 +15,9 @@ public class People extends User {
     private Boolean tncAgreement;
     private String vaccinationStatus;
     
+    public People(String accountID, String password, String name){
+        super(accountID, password, name);
+    }
     
     public void setIcOrPassport(String icpp){
         this.icOrPassport = icpp;
@@ -78,7 +84,8 @@ public class People extends User {
     
     @Override
     public void ModifyRegistration(String id){
-        
+        File file = new File("People.txt");
+        file.canExecute();
     }
-    
+   
 }

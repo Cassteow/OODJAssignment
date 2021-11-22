@@ -1,0 +1,2 @@
+0121231234;123;John Smith;F123123;true;12-12-1990;0121231234;Selangor;false;true;Not Vaccinated
+0176871218;123;Cass;F123455;27-03-2000;Selangor;false;true;Partially Vaccinated

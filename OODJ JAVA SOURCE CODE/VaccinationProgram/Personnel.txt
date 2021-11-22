@@ -1,3 +1,3 @@
-personnel01/123/John
-personnel02/123/Eugene
-personnel03/123/Cass
+personnel01;123;John
+personnel02;123;Eugene
+personnel03;123;Cass
