@@ -7,23 +7,29 @@ import javax.swing.JOptionPane;
 
 
 public class FrmSelectVaccineAppt extends javax.swing.JFrame {
-    String apptID;
-    String vacDate;
-    String vacLocation;
-    String vacName;
-    String accID;
-
+    String apptID, vacDate, vacTime, vacLocation, vacName, accID, name, user, frmAccID;
+    
+    FrmSelectVaccineAppt(String ID, String L, String d, String t, String name, String u, String frmID, String[] va){
+        this.accID = ID;
+        this.vacLocation = L;
+        this.vacDate = d;
+        this.vacTime = t;
+        this.name = name;
+        this.user = u;
+        this.frmAccID = frmID;
+        initComponents();
+        
+        cmbVaccineName.removeAllItems();
+        for(int i=0; i<va.length; i++){
+            cmbVaccineName.addItem(va[i]);
+        }
+    }
     
     public FrmSelectVaccineAppt() {
         initComponents();      
     }
     
-    FrmSelectVaccineAppt(String ID, String L, String d){
-        this.accID = ID;
-        this.vacLocation = L;
-        this.vacDate = d;
-        initComponents(); 
-    }
+    
 
     
     @SuppressWarnings("unchecked")
@@ -36,12 +42,22 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
         btnSubmitAppt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel1.setText("COVID-19 Vaccination Appointment");
 
         jLabel2.setText("Please select a vaccine type available:");
 
-        cmbVaccineName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pfizer ", "Sinovac", "AstraZeneca" }));
+        cmbVaccineName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pfizer", "AstraZeneca", "Sinovac" }));
+        cmbVaccineName.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                cmbVaccineNameComponentShown(evt);
+            }
+        });
 
         btnSubmitAppt.setText("Submit Appointment");
         btnSubmitAppt.addActionListener(new java.awt.event.ActionListener() {
@@ -85,11 +101,10 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSubmitApptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitApptActionPerformed
-        // TODO add your handling code here:
+        int apptCount = 1; //Appointment ID number
+
         //Get all appointment details from user input
         vacName = cmbVaccineName.getSelectedItem().toString();
-        int apptCount = 1;
-        Boolean verifyAppointment = false;
 
         //Get appointment number
         try{
@@ -102,48 +117,76 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
         }
         catch(IOException ex){
             JOptionPane.showMessageDialog(null, "An error has occurred!", "Error",JOptionPane.WARNING_MESSAGE);
+            this.setVisible(false);
+            new FrmMainLogin().setVisible(true);
         }
         
-        //Verify Appointment Number
+        //Ensure appointment ID is unique
         apptID = "APT"+String.valueOf(apptCount);
-        try{
+        try
+        {
             File file = new File("Appointment.txt");
             BufferedReader br = new BufferedReader(new FileReader(file));
             String checkLine = null;
             while((checkLine = br.readLine())!=null){
-                String[] temp = checkLine.split(";");
-            
-                    if(temp[0].equals(apptID)){
-                        verifyAppointment = true;
-                        break;
-                    }
+                String[] temp = checkLine.split(";");          
+                if(temp[0].equals(apptID)){
+                    apptID = "APT"+String.valueOf(apptCount+1);
+                }
             }
             br.close();
         }
-        catch(IOException ex){
+        catch(IOException ex)
+        {
             JOptionPane.showMessageDialog(null, "An error has occured!", "Error",JOptionPane.WARNING_MESSAGE);
+            this.setVisible(false);
+            new FrmMainLogin().setVisible(true);
         }
-        
-        if(verifyAppointment == false){
-            try{
-                File file = new File("Appointment.txt");
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-                bw.append(apptID+";");
-                bw.append(vacDate+";");
-                bw.append(vacLocation+";");
-                bw.append(vacName+";");
-                bw.append(accID+";\n");
-                bw.close();
+        //Confirm Appointment Details from user
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int confirm = JOptionPane.showConfirmDialog(this, "Please confirm your appointment details below:"
+                + "\nAppointment ID: "+apptID+"\nDate: "+vacDate+"\nTime: "+vacTime+"\nLocation: "+vacLocation
+                +"\nVaccine Name: "+vacName+"\nAccount ID: "+accID+user,
+                "Appointment Details Confirmation", dialogButton);
+        if(confirm == 0){
+            Appointment appt = new Appointment(apptID, vacDate, vacTime, vacLocation, vacName, accID);
+            appt.addNewAppointment(appt.appointmentID, appt.appointmentDate, appt.appointmentTime, appt.appointmentLocation, appt.apptVaccineName, appt.accountID);
+            this.setVisible(false);
+            
+            JOptionPane.showMessageDialog(null, "The new appointment is added successfully!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
+            //Go back to Main Menu for respective user
+            if(user == "Personnel"){
+                new FrmPersonnelMainMenu().setVisible(true);
             }
-            catch(IOException ex){
-                JOptionPane.showMessageDialog(null, "An error has occured!\nPlease try again later!", "Error",JOptionPane.WARNING_MESSAGE);
+            else if(user == "People"){
+                new FrmPeopleMainMenu().setVisible(true);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Operation cancelled!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
+            this.setVisible(false);
+            
+            if(user == "Personnel"){
+                new FrmPersonnelMainMenu().setVisible(true);
+            }
+            else if(user == "People"){
+                new FrmPeopleMainMenu().setVisible(true);
             }
             
-        }else{
-            JOptionPane.showMessageDialog(null, "An error has occured!\nPlease try again later...", "Error",JOptionPane.WARNING_MESSAGE);           
         }
-               
+        
+        
+        
     }//GEN-LAST:event_btnSubmitApptActionPerformed
+
+    private void cmbVaccineNameComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_cmbVaccineNameComponentShown
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_cmbVaccineNameComponentShown
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_formWindowActivated
 
    
     public static void main(String args[]) {
@@ -151,8 +194,8 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new FrmSelectVaccineAppt().setVisible(true);
-            }
-        });
+            }          
+        });       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

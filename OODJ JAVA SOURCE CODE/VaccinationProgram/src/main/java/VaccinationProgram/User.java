@@ -69,15 +69,7 @@ public class User {
     
     //Method to Add New Appointment
     public void AddNewAppointment(String id){
-        File file = new File("Appointment.txt");
         
-        FileWriter fw;
-        try{
-            fw = new FileWriter(file, true);
-            
-        } catch(IOException ex){
-            
-        }
         
     }
     

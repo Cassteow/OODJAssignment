@@ -1,13 +1,21 @@
 
 package VaccinationProgram;
 
+import java.io.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
 
 public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
-
+    String frmAccID, name;
+    String user = "Personnel";
     
+    public FrmAddAppointmentPersonnel(String id, String n) {
+        this.frmAccID = id;
+        this.name = n;
+        initComponents();
+    }
+   
     public FrmAddAppointmentPersonnel() {
         initComponents();
     }
@@ -37,12 +45,22 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
                 txtAccountIDActionPerformed(evt);
             }
         });
+        txtAccountID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAccountIDKeyTyped(evt);
+            }
+        });
 
         jLabel3.setText("Select Location:");
 
-        cmbLocation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Stadium Bukit Jalil (SBJ)", "World Trade Center KL (WTCKL)", "Stadium Shah Alam (SSA)" }));
+        cmbLocation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Stadium Bukit Jalil", "World Trade Center KL", "Stadium Shah Alam" }));
+        cmbLocation.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbLocationItemStateChanged(evt);
+            }
+        });
 
-        jLabel4.setText("Select Preferred Date");
+        jLabel4.setText("Select Preferred Date:");
 
         btnNext.setText("Next");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
@@ -58,6 +76,9 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
@@ -68,13 +89,10 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
                             .addComponent(txtAccountID, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(dcApptDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmbLocation, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(jLabel1)))
-                .addContainerGap(51, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(cmbLocation, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(48, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );
@@ -109,26 +127,141 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         //Get appointment details into respective variables
-        String accID, vacLocation, vacDate;
+        String accID, vacLocation, vacDate, vacTime = null;
         accID = txtAccountID.getText();
         vacLocation = cmbLocation.getItemAt(cmbLocation.getSelectedIndex());
+        
+        //Get Vaccination Appointment Time based on Location
+        switch (cmbLocation.getSelectedIndex()) {
+            case 0:
+                try{
+                    File file = new File("VaccinationCenter.txt");
+                    BufferedReader br = new BufferedReader(new FileReader(file));
+                    String checkLine = null;
+                    while((checkLine = br.readLine())!=null){
+                        String[] temp = checkLine.split(";");
+                        if(temp[0].equals("SBJ")){
+                            vacTime = temp[3];
+                            break;
+                        }
+                    }
+                    br.close();
+                }
+                catch(IOException ex){
+                    JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+                }   break;
+            case 1:
+                try{
+                    File file = new File("VaccinationCenter.txt");
+                    BufferedReader br = new BufferedReader(new FileReader(file));
+                    String checkLine = null;
+                    while((checkLine = br.readLine())!=null){
+                        String[] temp = checkLine.split(";");
+                        if(temp[0].equals("WTCKL")){
+                            vacTime = temp[3];
+                            break;
+                        }
+                    }
+                    br.close();
+                }
+                catch(IOException ex){
+                    JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+                }   break;
+            case 2:
+                try{
+                    File file = new File("VaccinationCenter.txt");
+                    BufferedReader br = new BufferedReader(new FileReader(file));
+                    String checkLine = null;
+                    while((checkLine = br.readLine())!=null){
+                        String[] temp = checkLine.split(";");
+                        if(temp[0].equals("SSA")){
+                            vacTime = temp[3];
+                            break;
+                        }
+                    }
+                    br.close();
+                }
+                catch(IOException ex){
+                    JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+                }   break;
+            default:
+                break;
+        }
+        //Get Appointment Date
         Date date = dcApptDate.getDate();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         vacDate = df.format(date);
         
+        
+        //Get Vaccines Available for the selected location
+        String[] vaccineAvailable = new String[1];
+        try{
+            File file = new File("CenterSupplies.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String checkLine = null;
+            while((checkLine = br.readLine())!=null){
+                String[] temp = checkLine.split(";");         
+                    if(temp[1].equals(vacLocation)){
+                        int vacCount = Integer.parseInt(temp[2]);
+                        int vacCountAvailable =0;
+                        
+                        //Get How many vaccines are available to initialize the vaccine position integer array
+                        for(int i = 1; i<=vacCount; i++){
+                            int vacSupply = Integer.parseInt(temp[2+(i*2)]);
+                            if(vacSupply>2){
+                                vacCountAvailable +=1;
+                            }
+                        }
+                        //Get Position of vaccines available in the text file
+                        int[] vacPosition = new int[vacCountAvailable];
+                        int j = 0;
+                        for(int i = 1; i<=vacCount; i++){
+                            int vacSupply = Integer.parseInt(temp[2+(i*2)]);
+                            if(vacSupply>2){
+                                vacPosition[j] = 1+(i*2);
+                                j +=1;
+                            }
+                        }
+                        
+                        //Get array of vaccine names available
+                        vaccineAvailable = new String[vacCountAvailable];
+                        for(int i = 0; i<vacCountAvailable; i++){
+                            vaccineAvailable[i] = temp[vacPosition[i]];
+                        }
+                        break;
+                    }
+            }
+            br.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+            
         //create new appointment class object
-        Appointment appt = new Appointment(accID, vacLocation, vacDate);
+        Appointment appt = new Appointment(accID, vacDate, vacTime, vacLocation);
         
         //Use Method to Verify Account ID entered by Personnel
         Boolean verifyAccountID = appt.verifyAccountID(accID);
         if(verifyAccountID == true){
             this.setVisible(false);
-            new FrmSelectVaccineAppt(appt.accountID, appt.appointmentDate, appt.appointmentLocation).setVisible(true);
+            new FrmSelectVaccineAppt(appt.accountID, appt.appointmentLocation,appt.appointmentDate, appt.appointmentTime, name, user, frmAccID, vaccineAvailable).setVisible(true);
 
         }else{
             JOptionPane.showMessageDialog(null, "Account ID is invalid or already has an appointment record!", "Error",JOptionPane.WARNING_MESSAGE);
         }      
     }//GEN-LAST:event_btnNextActionPerformed
+
+    //Ensure only digit is entered into the account ID textfield
+    private void txtAccountIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAccountIDKeyTyped
+        char enter = evt.getKeyChar();
+        if(!(Character.isDigit(enter))){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAccountIDKeyTyped
+
+    private void cmbLocationItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbLocationItemStateChanged
+        
+    }//GEN-LAST:event_cmbLocationItemStateChanged
 
     
     public static void main(String args[]) {

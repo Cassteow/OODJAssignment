@@ -1,19 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package VaccinationProgram;
 
-/**
- *
- * @author FA506I
- */
-public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AppointmentRecordsPersonnelForm
-     */
+public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
+    String frmAccID, name;
+
+    FrmAppointmentRecordsPersonnel(String aID, String n){
+        this.frmAccID = aID;
+        this.name = n;
+        initComponents();
+    }
+    
     public FrmAppointmentRecordsPersonnel() {
         initComponents();
     }
@@ -45,6 +41,11 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
         btnSearch.setText("Search");
 
         btnAddAppt.setText("Add New");
+        btnAddAppt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddApptActionPerformed(evt);
+            }
+        });
 
         btnViewAppt.setText("View Details");
 
@@ -111,6 +112,12 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddApptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddApptActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new FrmAddAppointmentPersonnel(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_btnAddApptActionPerformed
 
     /**
      * @param args the command line arguments
