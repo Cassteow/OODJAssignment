@@ -74,6 +74,10 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(111, 111, 111)
@@ -91,10 +95,6 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
                                 .addComponent(dcApptDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cmbLocation, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(48, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,64 +191,30 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
         Date date = dcApptDate.getDate();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         vacDate = df.format(date);
-        
-        
-        //Get Vaccines Available for the selected location
-        String[] vaccineAvailable = new String[1];
-        try{
-            File file = new File("CenterSupplies.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String checkLine = null;
-            while((checkLine = br.readLine())!=null){
-                String[] temp = checkLine.split(";");         
-                    if(temp[1].equals(vacLocation)){
-                        int vacCount = Integer.parseInt(temp[2]);
-                        int vacCountAvailable =0;
-                        
-                        //Get How many vaccines are available to initialize the vaccine position integer array
-                        for(int i = 1; i<=vacCount; i++){
-                            int vacSupply = Integer.parseInt(temp[2+(i*2)]);
-                            if(vacSupply>2){
-                                vacCountAvailable +=1;
-                            }
-                        }
-                        //Get Position of vaccines available in the text file
-                        int[] vacPosition = new int[vacCountAvailable];
-                        int j = 0;
-                        for(int i = 1; i<=vacCount; i++){
-                            int vacSupply = Integer.parseInt(temp[2+(i*2)]);
-                            if(vacSupply>2){
-                                vacPosition[j] = 1+(i*2);
-                                j +=1;
-                            }
-                        }
-                        
-                        //Get array of vaccine names available
-                        vaccineAvailable = new String[vacCountAvailable];
-                        for(int i = 0; i<vacCountAvailable; i++){
-                            vaccineAvailable[i] = temp[vacPosition[i]];
-                        }
-                        break;
-                    }
-            }
-            br.close();
-        }
-        catch(IOException ex){
-            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
-        }
-            
+         
         //create new appointment class object
         Appointment appt = new Appointment(accID, vacDate, vacTime, vacLocation);
-        
+        //Get vaccines available for the selected location
+        String[] vaccineAvailable = appt.checkVaccineAvailable(vacLocation);
         //Use Method to Verify Account ID entered by Personnel
         Boolean verifyAccountID = appt.verifyAccountID(accID);
-        if(verifyAccountID == true){
-            this.setVisible(false);
-            new FrmSelectVaccineAppt(appt.accountID, appt.appointmentLocation,appt.appointmentDate, appt.appointmentTime, name, user, frmAccID, vaccineAvailable).setVisible(true);
+        
+        //Use Method to ensure center do not exceed appointment limit
+        Boolean verifyLimit = appt.checkAppointmentLimit(vacLocation, vacDate);
+        //Call FrmSelectVaccine if all conditions are validated
+        if(verifyLimit == true){
+            if(verifyAccountID == true){
+                this.setVisible(false);
+                new FrmSelectVaccineAppt(appt.accountID, appt.appointmentLocation,appt.appointmentDate, appt.appointmentTime, name, user, frmAccID, vaccineAvailable).setVisible(true);
 
-        }else{
-            JOptionPane.showMessageDialog(null, "Account ID is invalid or already has an appointment record!", "Error",JOptionPane.WARNING_MESSAGE);
-        }      
+            }else{
+                JOptionPane.showMessageDialog(null, "Account ID is invalid or already has an appointment record!", "Error",JOptionPane.WARNING_MESSAGE);
+            }   
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "The vaccination center is fully booked for the selected date."
+                    + "\nPlease select another location or date for the appointment.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnNextActionPerformed
 
     //Ensure only digit is entered into the account ID textfield
