@@ -33,6 +33,11 @@ public class Appointment {
         this.accountID = accID;
     }
     
+    //Constructor method with 1 attributes
+    public Appointment(String aID){
+        this.appointmentID = aID;
+    }
+    
     public void getAppointmentID(String apptID){
         this.appointmentID = apptID;
     }
@@ -186,7 +191,7 @@ public class Appointment {
         return vaccineAvailable;
     }
     
-    //Check Vaccination Center Appointment Limit
+    //Method to Check Vaccination Center Appointment Limit
     public Boolean checkAppointmentLimit(String vacLocation, String vacDate){
         Boolean limitNotExceeded = false;
         int appointmentCount = 0;
@@ -213,7 +218,35 @@ public class Appointment {
             limitNotExceeded = true;
         }
         return limitNotExceeded;
-    }   
+    } 
+    
+    //Method to display Appointment Details 
+    public String[] viewAppointmentDetails(String aID){
+        String[] apptDetails = new String[6];
+        try{
+            File file = new File("Appointment.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));           
+            Object[] lines = br.lines().toArray();
+            //Load records from text file row by row
+            for(int i = 0; i<lines.length;i++){
+                String[] row = lines[i].toString().split(";");
+                if(row[0].equals(aID)){
+                    apptDetails[0] = row[5];
+                    apptDetails[1] = row[0];
+                    apptDetails[2] = row[3];
+                    apptDetails[3] = row[1];
+                    apptDetails[4] = row[2];
+                    apptDetails[5] = row[4];
+                    
+                }
+            }
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return apptDetails;
+    }
 }
 
 

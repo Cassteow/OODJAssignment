@@ -1,21 +1,51 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package VaccinationProgram;
 
-/**
- *
- * @author FA506I
- */
-public class FrmViewApptPeople extends javax.swing.JFrame {
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
-    /**
-     * Creates new form FrmApptSuccess
-     */
+
+public class FrmViewApptPeople extends javax.swing.JFrame {
+    String accID, name, apptID;
+    
+    FrmViewApptPeople(String id, String n){
+        this.accID = id;
+        this.name = n;
+        initComponents();
+        //Get Appointment ID of user based on Account ID
+        try{
+            File file = new File("Appointment.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));           
+            Object[] lines = br.lines().toArray();
+            //Load records from text file row by row
+            for(int i = 0; i<lines.length;i++){
+                String[] row = lines[i].toString().split(";");
+                if(row[5].equals(accID)){
+                    apptID = row[0];
+                }
+            }
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        Appointment appt = new Appointment(apptID);
+        //Call view appointment method from appointment class
+        String[] details = appt.viewAppointmentDetails(appt.appointmentID);
+        lblAccountID.setText(details[0]);
+        lblApptID.setText(details[1]);
+        lblLocation.setText(details[2]);
+        lblDate.setText(details[3]);
+        lblTime.setText(details[4]);
+        lblVaccine.setText(details[5]);  
+    }
+
+    
     public FrmViewApptPeople() {
         initComponents();
+        
     }
 
     /**
@@ -37,7 +67,7 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         lblAccountID = new javax.swing.JLabel();
         lblApptID = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lblDate = new javax.swing.JLabel();
         lblLocation = new javax.swing.JLabel();
         lblTime = new javax.swing.JLabel();
         lblVaccine = new javax.swing.JLabel();
@@ -61,18 +91,6 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
         jLabel7.setText("Time:");
 
         jLabel8.setText("Vaccine:");
-
-        lblAccountID.setText("601234567");
-
-        lblApptID.setText("SBJ1001");
-
-        jLabel9.setText("2 Nov 2021");
-
-        lblLocation.setText("Stadium Bukit Jalil");
-
-        lblTime.setText("10.00am - 6.00pm");
-
-        lblVaccine.setText("Pfizer");
 
         jLabel10.setText("Please arrive to the appointment location within the given time and date above.");
 
@@ -102,7 +120,7 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblAccountID)
                                     .addComponent(lblApptID)
-                                    .addComponent(jLabel9)
+                                    .addComponent(lblDate)
                                     .addComponent(lblLocation)
                                     .addComponent(lblTime)
                                     .addComponent(lblVaccine)))
@@ -136,7 +154,7 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel9))
+                    .addComponent(lblDate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -206,9 +224,9 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblAccountID;
     private javax.swing.JLabel lblApptID;
+    private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblLocation;
     private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblVaccine;

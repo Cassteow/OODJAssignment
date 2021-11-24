@@ -45,7 +45,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblAccountID" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblApptID" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDate" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblLocation" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblTime" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblVaccine" min="-2" max="-2" attributes="0"/>
@@ -92,7 +92,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblDate" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -160,34 +160,16 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblAccountID">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="601234567"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblApptID">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="SBJ1001"/>
-      </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="2 Nov 2021"/>
-      </Properties>
+    <Component class="javax.swing.JLabel" name="lblDate">
     </Component>
     <Component class="javax.swing.JLabel" name="lblLocation">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Stadium Bukit Jalil"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTime">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="10.00am - 6.00pm"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblVaccine">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Pfizer"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>

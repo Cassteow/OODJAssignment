@@ -58,8 +58,7 @@ public class User {
     
     //Method to Modify Registration Details
     public void ModifyRegistration(String id){
-        File file = new File("People.txt");
-        FileReader fr;
+       
     }
     
     //Method to View Specific Registration Record

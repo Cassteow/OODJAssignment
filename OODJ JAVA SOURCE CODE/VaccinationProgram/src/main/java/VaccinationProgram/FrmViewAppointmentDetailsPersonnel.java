@@ -1,19 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package VaccinationProgram;
 
-/**
- *
- * @author FA506I
- */
-public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
-    /**
-     * Creates new form FrmViewAppointmentDetailsPersonnel
-     */
+
+public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
+    String frmAccID, name, apptID;
+    
+    FrmViewAppointmentDetailsPersonnel(String aID, String n, String apptID){
+        this.frmAccID = aID;
+        this.name = n;
+        this.apptID = apptID;
+        initComponents();
+        
+        Appointment appt = new Appointment(apptID);
+        //Call view appointment method from appointment class
+        String[] details = appt.viewAppointmentDetails(appt.appointmentID);
+        lblAccountID.setText(details[0]);
+        lblApptID.setText(details[1]);
+        lblLocation.setText(details[2]);
+        lblDate.setText(details[3]);
+        lblTime.setText(details[4]);
+        lblVaccine.setText(details[5]);  
+        
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e){
+                new FrmAppointmentRecordsPersonnel(frmAccID, name).setEnabled(true);
+                new FrmAppointmentRecordsPersonnel(frmAccID, name).setVisible(true);
+            }
+        });
+    }
+
+   
     public FrmViewAppointmentDetailsPersonnel() {
         initComponents();
     }
@@ -44,6 +66,14 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("COVID-19 Vaccination Appointment");
 
@@ -148,6 +178,14 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        new FrmAppointmentRecordsPersonnel(frmAccID, name).setEnabled(true);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        new FrmAppointmentRecordsPersonnel(frmAccID, name).setEnabled(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
