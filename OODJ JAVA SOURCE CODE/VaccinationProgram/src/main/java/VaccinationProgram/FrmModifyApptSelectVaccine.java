@@ -6,10 +6,11 @@ import javax.swing.JOptionPane;
 
 
 
-public class FrmSelectVaccineAppt extends javax.swing.JFrame {
+public class FrmModifyApptSelectVaccine extends javax.swing.JFrame {
     String apptID, vacDate, vacTime, vacLocation, vacName, accID, name, user, frmAccID;
     
-    FrmSelectVaccineAppt(String ID, String L, String d, String t, String name, String u, String frmID, String[] va){
+    FrmModifyApptSelectVaccine(String aID, String ID, String L, String d, String t, String name, String u, String frmID, String[] va){
+        this.apptID = aID;
         this.accID = ID;
         this.vacLocation = L;
         this.vacDate = d;
@@ -17,6 +18,7 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
         this.name = name;
         this.user = u;
         this.frmAccID = frmID;
+
         initComponents();
         
         cmbVaccineName.removeAllItems();
@@ -25,7 +27,7 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
         }
     }
     
-    public FrmSelectVaccineAppt() {
+    public FrmModifyApptSelectVaccine() {
         initComponents();      
     }
     
@@ -39,7 +41,7 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cmbVaccineName = new javax.swing.JComboBox<>();
-        btnSubmitAppt = new javax.swing.JButton();
+        btnModifyAppt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -59,10 +61,10 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
             }
         });
 
-        btnSubmitAppt.setText("Submit Appointment");
-        btnSubmitAppt.addActionListener(new java.awt.event.ActionListener() {
+        btnModifyAppt.setText("Modify Appointment");
+        btnModifyAppt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmitApptActionPerformed(evt);
+                btnModifyApptActionPerformed(evt);
             }
         });
 
@@ -79,7 +81,7 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSubmitAppt, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModifyAppt, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbVaccineName, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(114, 114, 114))
         );
@@ -93,67 +95,28 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(cmbVaccineName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(btnSubmitAppt)
+                .addComponent(btnModifyAppt)
                 .addGap(21, 21, 21))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSubmitApptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitApptActionPerformed
-        int apptCount = 1; //Appointment ID number
-
+    private void btnModifyApptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyApptActionPerformed
         //Get all appointment details from user input
         vacName = cmbVaccineName.getSelectedItem().toString();
-
-        //Get appointment number
-        try{
-            File file = new File("Appointment.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            while (br.readLine()!= null){
-                apptCount ++;
-            }
-            br.close();
-        }
-        catch(IOException ex){
-            JOptionPane.showMessageDialog(null, "An error has occurred!", "Error",JOptionPane.WARNING_MESSAGE);
-            this.setVisible(false);
-            new FrmMainLogin().setVisible(true);
-        }
-        
-        //Ensure appointment ID is unique
-        apptID = "APT"+String.valueOf(apptCount);
-        try
-        {
-            File file = new File("Appointment.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String checkLine = null;
-            while((checkLine = br.readLine())!=null){
-                String[] temp = checkLine.split(";");          
-                if(temp[0].equals(apptID)){
-                    apptID = "APT"+String.valueOf(apptCount+1);
-                }
-            }
-            br.close();
-        }
-        catch(IOException ex)
-        {
-            JOptionPane.showMessageDialog(null, "An error has occured!", "Error",JOptionPane.WARNING_MESSAGE);
-            this.setVisible(false);
-            new FrmMainLogin().setVisible(true);
-        }
-        //Confirm Appointment Details from user
+        //Confirm Modified Appointment Details from user
         int dialogButton = JOptionPane.YES_NO_OPTION;
-        int confirm = JOptionPane.showConfirmDialog(this, "Please confirm your appointment details below:"
+        int confirm = JOptionPane.showConfirmDialog(this, "Please confirm your new appointment details below:"
                 + "\nAppointment ID: "+apptID+"\nDate: "+vacDate+"\nTime: "+vacTime+"\nLocation: "+vacLocation
                 +"\nVaccine Name: "+vacName+"\nAccount ID: "+accID,
                 "Appointment Details Confirmation", dialogButton);
         if(confirm == 0){
             Appointment appt = new Appointment(apptID, vacDate, vacTime, vacLocation, vacName, accID);
-            appt.addNewAppointment(appt.appointmentID, appt.appointmentDate, appt.appointmentTime, appt.appointmentLocation, appt.apptVaccineName, appt.accountID);
+            appt.modifyAppointment(appt.getAppointmentID(), appt.getAppointmentDate(), appt.getAppointmentTime(), appt.getAppointmentLocation(), appt.getApptVaccineName(), appt.getAccountID());
             this.setVisible(false);
             
-            JOptionPane.showMessageDialog(null, "The new appointment is added successfully!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The appointment has been modified successfully!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
             //Go back to Main Menu for respective user
             if(user == "Personnel"){
                 new FrmPersonnelMainMenu().setVisible(true);
@@ -176,7 +139,7 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_btnSubmitApptActionPerformed
+    }//GEN-LAST:event_btnModifyApptActionPerformed
 
     private void cmbVaccineNameComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_cmbVaccineNameComponentShown
         // TODO add your handling code here:
@@ -193,13 +156,13 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmSelectVaccineAppt().setVisible(true);
+                new FrmModifyApptSelectVaccine().setVisible(true);
             }          
         });       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSubmitAppt;
+    private javax.swing.JButton btnModifyAppt;
     private javax.swing.JComboBox<String> cmbVaccineName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

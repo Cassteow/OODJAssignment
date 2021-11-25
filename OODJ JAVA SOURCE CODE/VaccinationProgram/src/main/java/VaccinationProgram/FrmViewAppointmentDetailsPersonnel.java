@@ -1,11 +1,6 @@
 
 package VaccinationProgram;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import javax.swing.JOptionPane;
 
 
 public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
@@ -27,18 +22,14 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
         lblTime.setText(details[4]);
         lblVaccine.setText(details[5]);  
         
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e){
-                new FrmAppointmentRecordsPersonnel(frmAccID, name).setEnabled(true);
-                new FrmAppointmentRecordsPersonnel(frmAccID, name).setVisible(true);
-            }
-        });
     }
 
    
     public FrmViewAppointmentDetailsPersonnel() {
         initComponents();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,7 +56,7 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
         btnModify = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -102,6 +93,11 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
         lblVaccine.setText("Pfizer");
 
         btnModify.setText("Modify Appointment");
+        btnModify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifyActionPerformed(evt);
+            }
+        });
 
         btnCancel.setText("Cancel Appointment");
 
@@ -178,14 +174,23 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
+    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        new FrmAppointmentRecordsPersonnel(frmAccID, name).setEnabled(true);
+        this.dispose();
+        new FrmAppointmentRecordsPersonnel(frmAccID, name).setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        new FrmAppointmentRecordsPersonnel(frmAccID, name).setEnabled(true);
+        
     }//GEN-LAST:event_formWindowClosed
+
+    private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
+        
+        this.dispose();
+        new FrmModifyAppointmentPersonnel(frmAccID, name, apptID).setVisible(true);
+    }//GEN-LAST:event_btnModifyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,6 +225,8 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
                 new FrmViewAppointmentDetailsPersonnel().setVisible(true);
             }
         });
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

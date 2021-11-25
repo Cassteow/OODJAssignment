@@ -34,7 +34,12 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
         btnNext = new javax.swing.JButton();
         dcApptDate = new com.toedter.calendar.JDateChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("COVID-19 Vaccination Appointment");
 
@@ -228,6 +233,11 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
     private void cmbLocationItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbLocationItemStateChanged
         
     }//GEN-LAST:event_cmbLocationItemStateChanged
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        new FrmAppointmentRecordsPersonnel(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     
     public static void main(String args[]) {

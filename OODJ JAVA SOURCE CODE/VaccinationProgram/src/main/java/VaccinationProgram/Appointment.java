@@ -38,43 +38,51 @@ public class Appointment {
         this.appointmentID = aID;
     }
     
-    public void getAppointmentID(String apptID){
+    public void setAppointmentID(String apptID){
         this.appointmentID = apptID;
     }
     
-    public String setAppointmentID(){
+    public String getAppointmentID(){
         return appointmentID;
     }
     
-    public void getAppointmentDate(String apptD){
+    public void setAppointmentDate(String apptD){
         this.appointmentID = apptD;
     }
     
-    public String setAppointmentDate(){
+    public String getAppointmentDate(){
         return appointmentDate;
     }
     
-    public void getAppointmentLocation(String apptL){
+    public void setAppointmentLocation(String apptL){
         this.appointmentLocation = apptL;
     }
     
-    public String setAppointmentLocation(){
+    public String getAppointmentTime(){
+        return appointmentTime;
+    }
+    
+    public void setAppointmentTime(String apptT){
+        this.appointmentTime = apptT;
+    }
+    
+    public String getAppointmentLocation(){
         return appointmentLocation;
     }
     
-    public void getApptVaccineName(String v){
+    public void setApptVaccineName(String v){
         this.apptVaccineName = v;
     }
     
-    public String setApptVaccineName(){
+    public String getApptVaccineName(){
         return apptVaccineName;
     }
     
-    public void getAccountID(String accID){
+    public void setAccountID(String accID){
         this.accountID = accID;
     }
     
-    public String setAccountID(){
+    public String getAccountID(){
         return accountID;
     }
     
@@ -240,12 +248,49 @@ public class Appointment {
                     
                 }
             }
+            br.close();
         }
         catch(IOException ex){
             JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
         }
         
         return apptDetails;
+    }
+    
+    //Method to Modify Appointment Details
+    public Boolean modifyAppointment(String apptID, String d, String t, String L, String vacName, String accID){
+        File file = new File("Appointment.txt");
+        File tempFile = new File("Temp.txt");
+        boolean modified = false;
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile, true));
+            String line;
+            while((line = br.readLine())!= null){
+                String[] currentAppt = line.split(";");
+                if(currentAppt[0].equals(apptID)){
+                    bw.append(apptID+";");
+                    bw.append(d+";");
+                    bw.append(t+";");
+                    bw.append(L+";");
+                    bw.append(vacName+";");
+                    bw.append(accID+"\n");
+                }
+                else{
+                    bw.append(line+"\n");
+                }
+            }
+            
+            br.close();
+            bw.close();
+            file.delete();
+            modified =tempFile.renameTo(file);               
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return modified;
     }
 }
 

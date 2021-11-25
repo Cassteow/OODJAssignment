@@ -13,8 +13,9 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
         //To Display all the appointment records into the table when form is initialized
         try{
             File file = new File("Appointment.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));           
+            BufferedReader br = new BufferedReader(new FileReader(file)); 
             DefaultTableModel model = (DefaultTableModel)tblApptRecords.getModel();
+            
             Object[] lines = br.lines().toArray();
             //Load records from text file row by row
             for(int i = 0; i<lines.length;i++){
@@ -25,6 +26,8 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
         catch(IOException ex){
             JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
         }
+        DefaultTableModel model = (DefaultTableModel)tblApptRecords.getModel();
+           
     }
     
     public FrmAppointmentRecordsPersonnel() {
@@ -44,6 +47,8 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
         catch(IOException ex){
             JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
         }
+        DefaultTableModel model = (DefaultTableModel)tblApptRecords.getModel();
+        
     }
 
     /**
@@ -65,7 +70,7 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
         tblApptRecords = new javax.swing.JTable();
         btnViewAll = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("COVID-19 Vaccination Appointments");
 
@@ -103,12 +108,26 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        tblApptRecords.setColumnSelectionAllowed(true);
+        tblApptRecords.setCellSelectionEnabled(true);
+        tblApptRecords.setSurrendersFocusOnKeystroke(true);
+        tblApptRecords.getTableHeader().setReorderingAllowed(false);
+        tblApptRecords.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblApptRecordsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblApptRecords);
         tblApptRecords.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -178,7 +197,7 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
 
     private void btnAddApptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddApptActionPerformed
         //Call FrmAddAppointmentPersonnel
-        
+        this.dispose();
         new FrmAddAppointmentPersonnel(frmAccID, name).setVisible(true);
     }//GEN-LAST:event_btnAddApptActionPerformed
 
@@ -204,13 +223,15 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnViewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllActionPerformed
+        //clear all rows
+        DefaultTableModel model = (DefaultTableModel)tblApptRecords.getModel();
+        model.setRowCount(0);
         //Display all appointment records
         try{
             File file = new File("Appointment.txt");
             BufferedReader br = new BufferedReader(new FileReader(file));
             
             
-            DefaultTableModel model = (DefaultTableModel)tblApptRecords.getModel();
             Object[] lines = br.lines().toArray();
             
             for(int i = 0; i<lines.length;i++){
@@ -231,11 +252,15 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
             int row = tblApptRecords.getSelectedRow();
             //Get appointment ID of the record selected
             String apptID = tblApptRecords.getModel().getValueAt(row, 0).toString();
-            this.setVisible(false);
+            this.dispose();
             new FrmViewAppointmentDetailsPersonnel(frmAccID, name, apptID).setVisible(true);
         }
         
     }//GEN-LAST:event_btnViewApptActionPerformed
+
+    private void tblApptRecordsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblApptRecordsMouseClicked
+        
+    }//GEN-LAST:event_tblApptRecordsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -276,6 +301,7 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
             public void run() {
                 new FrmAppointmentRecordsPersonnel().setVisible(true);
             }
+             
         });
     }
 
