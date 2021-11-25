@@ -244,8 +244,7 @@ public class Appointment {
                     apptDetails[2] = row[3];
                     apptDetails[3] = row[1];
                     apptDetails[4] = row[2];
-                    apptDetails[5] = row[4];
-                    
+                    apptDetails[5] = row[4];                   
                 }
             }
             br.close();
@@ -262,9 +261,20 @@ public class Appointment {
         File file = new File("Appointment.txt");
         File tempFile = new File("Temp.txt");
         boolean modified = false;
+        
+        //Empty the temp file content
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
+            bw.write("");
+            bw.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        //Read original file and write modified data into temp file
         try{
             BufferedReader br = new BufferedReader(new FileReader(file));
-            BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile, true));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
             String line;
             while((line = br.readLine())!= null){
                 String[] currentAppt = line.split(";");
@@ -280,16 +290,42 @@ public class Appointment {
                     bw.append(line+"\n");
                 }
             }
-            
-            br.close();
             bw.close();
-            file.delete();
-            modified =tempFile.renameTo(file);               
+            br.close();
         }
         catch(IOException ex){
             JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
         }
         
+        //Empty the original file
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write("");
+            bw.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        
+        //Write modified data into original file
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(tempFile));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            String line;
+            while((line = br.readLine())!= null){
+                bw.append(line+"\n");
+            } 
+            bw.close();
+            br.close();
+            modified = true;
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        
+        if(modified == true){
+            JOptionPane.showMessageDialog(null, "Appointment is modified successfully.", "Appointment Modified",JOptionPane.INFORMATION_MESSAGE);
+        }
         return modified;
     }
 }

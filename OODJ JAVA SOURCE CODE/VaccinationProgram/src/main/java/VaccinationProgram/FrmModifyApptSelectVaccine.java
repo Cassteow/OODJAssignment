@@ -116,7 +116,6 @@ public class FrmModifyApptSelectVaccine extends javax.swing.JFrame {
             appt.modifyAppointment(appt.getAppointmentID(), appt.getAppointmentDate(), appt.getAppointmentTime(), appt.getAppointmentLocation(), appt.getApptVaccineName(), appt.getAccountID());
             this.setVisible(false);
             
-            JOptionPane.showMessageDialog(null, "The appointment has been modified successfully!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
             //Go back to Main Menu for respective user
             if(user == "Personnel"){
                 new FrmPersonnelMainMenu().setVisible(true);
