@@ -1,2 +1,2 @@
-APT1;28-11-2021;8.00am-6.00pm;Stadium Shah Alam;Pfizer;0121231234
-APT2;12-11-2021;9.00am-6.00pm;Stadium Bukit Jalil;Pfizer;0176871218
+APT1;28-11-2021;8.00am-6.00pm;Stadium Shah Alam;Pfizer BioNTech;0121231234
+APT2;12-11-2021;9.00am-6.00pm;Stadium Bukit Jalil;Pfizer BioNTech;0176871218

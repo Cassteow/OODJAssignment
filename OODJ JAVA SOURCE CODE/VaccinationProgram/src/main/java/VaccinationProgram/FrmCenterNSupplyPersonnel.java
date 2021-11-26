@@ -13,6 +13,7 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
     FrmCenterNSupplyPersonnel(String aID, String n){
         this.frmAccID = aID;
         this.name = n;
+        initComponents();
     }
     public FrmCenterNSupplyPersonnel() {
         initComponents();
@@ -86,14 +87,6 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
 
         jLabel8.setText("Operating Time:");
 
-        lblCenterID.setText("SBJ");
-
-        lblCenterLocation.setText("Stadium Bukit Jalil");
-
-        lblCenterDay.setText("Mon - Sun");
-
-        lblCenterTime.setText("10.00am - 6.00pm");
-
         btnModifyCenter.setText("Modify Information");
         btnModifyCenter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,24 +95,41 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
         });
 
         btnModifySupply.setText("Modify Supply");
+        btnModifySupply.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifySupplyActionPerformed(evt);
+            }
+        });
 
         tblVaccineSupply.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Vaccine Name", "Supply (Dose)"
+                "Vaccine ID", "Vaccine Name", "Supply (Dose)"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, true
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
         tblVaccineSupply.getTableHeader().setReorderingAllowed(false);
+        tblVaccineSupply.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tblVaccineSupplyKeyTyped(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblVaccineSupply);
 
         btnView.setText("View Selection");
@@ -180,7 +190,7 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnModifySupply)
-                .addGap(152, 152, 152))
+                .addGap(45, 45, 45))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,9 +231,9 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
                 .addComponent(btnModifyCenter)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addComponent(btnModifySupply)
-                .addGap(164, 164, 164))
+                .addGap(183, 183, 183))
         );
 
         pack();
@@ -231,7 +241,8 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
 
     private void btnModifyCenterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyCenterActionPerformed
         String centerID = lblCenterID.getText();
-        
+        this.dispose();
+        new FrmModifyCenterPersonnel(frmAccID, name, centerID).setVisible(true);
         
     }//GEN-LAST:event_btnModifyCenterActionPerformed
 
@@ -261,6 +272,34 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
         VaccineCenter vc = new VaccineCenter(centerID);
         vc.searchVaccineCenter(centerID);
     }//GEN-LAST:event_btnViewActionPerformed
+
+    private void btnModifySupplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifySupplyActionPerformed
+        String centerID = lblCenterID.getText();
+        //Confirm Modified Appointment Details from user
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int confirm = JOptionPane.showConfirmDialog(this, "Do you want to modify the vaccine supplies?",
+                "Modify Vaccine Supply Confirmation", dialogButton);
+        if(confirm == 0){
+            VaccineCenter vc = new VaccineCenter(centerID);
+            boolean modified = vc.modifyCenterSupply(centerID);
+            if(modified == true){
+                JOptionPane.showMessageDialog(null, "Vaccine supply is updated!", "Modification Successful",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Please ensure only numbers are entered!", "Error",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Operation cancelled!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
+        }       
+    }//GEN-LAST:event_btnModifySupplyActionPerformed
+
+    private void tblVaccineSupplyKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblVaccineSupplyKeyTyped
+        char enter = evt.getKeyChar();
+        if(!(Character.isDigit(enter))){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tblVaccineSupplyKeyTyped
 
     
     public static void main(String args[]) {

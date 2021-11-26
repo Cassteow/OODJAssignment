@@ -93,11 +93,11 @@ public class FrmCenterNSupplyPeople extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Vaccine Name", "Supply (Dose)"
+                "Vaccine ID", "Vaccine Name", "Supply (Dose)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -217,7 +217,7 @@ public class FrmCenterNSupplyPeople extends javax.swing.JFrame {
                     int vacCount = Integer.parseInt(row[2]);
                     
                     for(int j = 0; j<vacCount; j++){
-                        String[] loadVaccine = {row[1+(j+1)*2], row[2+(j+1)*2]};
+                        String[] loadVaccine = {row[(j+1)*3], row[1+(j+1)*3], row[2+(j+1)*3]};
                         model.addRow(loadVaccine);
                         found = true;
                     }
@@ -286,7 +286,7 @@ public class FrmCenterNSupplyPeople extends javax.swing.JFrame {
                     int vacCount = Integer.parseInt(row[2]);
                     
                     for(int j = 0; j<vacCount; j++){
-                        String[] loadVaccine = {row[1+(j+1)*2], row[2+(j+1)*2]};
+                        String[] loadVaccine = {row[(j+1)*3], row[1+(j+1)*3], row[2+(j+1)*3]};
                         model.addRow(loadVaccine);
                     }
                 }                

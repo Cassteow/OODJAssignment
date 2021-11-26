@@ -1,2 +1,3 @@
-APT1;28-11-2021;8.00am-6.00pm;Stadium Shah Alam;Pfizer;0121231234
-APT2;12-11-2021;9.00am-6.00pm;Stadium Bukit Jalil;Pfizer;0176871218
+SBJ;Stadium Bukit Jalil;3;pfizer;Pfizer BioNTech;10000;sinovac;Sinovac;2000;az;AstraZeneca;30000
+WTCKL;World Trade Center KL;3;pfizer;Pfizer BioNTech;7000;sinovac;Sinovac;2000;az;AstraZeneca;100
+SSA;Stadium Shah Alam;3;pfizer;Pfizer BioNTech;1000;sinovac;Sinovac;2000;az;AstraZeneca;100

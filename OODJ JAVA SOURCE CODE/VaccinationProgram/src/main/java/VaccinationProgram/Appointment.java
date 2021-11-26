@@ -166,8 +166,8 @@ public class Appointment {
                         
                         //Get How many vaccines are available to initialize the vaccine position integer array
                         for(int i = 1; i<=vacCount; i++){
-                            int vacSupply = Integer.parseInt(temp[2+(i*2)]);
-                            if(vacSupply>2){
+                            int vacSupply = Integer.parseInt(temp[2+(3*i)]);
+                            if(vacSupply>500){//Check whether there are enough supply
                                 vacCountAvailable +=1;
                             }
                         }
@@ -175,9 +175,9 @@ public class Appointment {
                         int[] vacPosition = new int[vacCountAvailable];
                         int j = 0;
                         for(int i = 1; i<=vacCount; i++){
-                            int vacSupply = Integer.parseInt(temp[2+(i*2)]);
-                            if(vacSupply>2){
-                                vacPosition[j] = 1+(i*2);
+                            int vacSupply = Integer.parseInt(temp[2+(3*i)]);
+                            if(vacSupply>500){//Check whether there are enough supply
+                                vacPosition[j] = 1+(3*i);
                                 j +=1;
                             }
                         }
