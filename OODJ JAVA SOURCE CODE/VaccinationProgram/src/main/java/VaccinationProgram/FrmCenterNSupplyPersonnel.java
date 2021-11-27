@@ -46,6 +46,7 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblVaccineSupply = new javax.swing.JTable();
         btnView = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -60,7 +61,12 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("Vaccination Center and Supply Details");
 
@@ -139,6 +145,13 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
             }
         });
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,7 +161,9 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(103, 103, 103)
+                                .addContainerGap()
+                                .addComponent(btnBack)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(123, 123, 123)
@@ -162,7 +177,7 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
                                             .addComponent(jLabel6)
                                             .addComponent(jLabel5)
                                             .addComponent(jLabel7)
-                                            .addComponent(jLabel8))
+                                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lblCenterTime)
@@ -178,10 +193,7 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(btnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(132, 132, 132)
-                                .addComponent(btnModifyCenter)))
+                                            .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 13, Short.MAX_VALUE)
@@ -190,14 +202,20 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnModifySupply)
-                .addGap(45, 45, 45))
+                .addGap(40, 40, 40))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(133, 133, 133)
+                .addComponent(btnModifyCenter)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBack))
+                .addGap(22, 22, 22)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -227,13 +245,13 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(lblCenterTime))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(btnModifyCenter)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addComponent(btnModifySupply)
-                .addGap(183, 183, 183))
+                .addGap(113, 113, 113))
         );
 
         pack();
@@ -241,8 +259,13 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
 
     private void btnModifyCenterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyCenterActionPerformed
         String centerID = lblCenterID.getText();
-        this.dispose();
-        new FrmModifyCenterPersonnel(frmAccID, name, centerID).setVisible(true);
+        if(centerID == ""){
+            JOptionPane.showMessageDialog(null, "Please select a Vaccination Center to proceed!", "Error",JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            this.dispose();
+            new FrmModifyCenterPersonnel(frmAccID, name, centerID).setVisible(true);
+        }
         
     }//GEN-LAST:event_btnModifyCenterActionPerformed
 
@@ -275,23 +298,28 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
 
     private void btnModifySupplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifySupplyActionPerformed
         String centerID = lblCenterID.getText();
-        //Confirm Modified Appointment Details from user
-        int dialogButton = JOptionPane.YES_NO_OPTION;
-        int confirm = JOptionPane.showConfirmDialog(this, "Do you want to modify the vaccine supplies?",
-                "Modify Vaccine Supply Confirmation", dialogButton);
-        if(confirm == 0){
-            VaccineCenter vc = new VaccineCenter(centerID);
-            boolean modified = vc.modifyCenterSupply(centerID);
-            if(modified == true){
-                JOptionPane.showMessageDialog(null, "Vaccine supply is updated!", "Modification Successful",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Please ensure only numbers are entered!", "Error",JOptionPane.ERROR_MESSAGE);
-            }
+        if(centerID == ""){
+            JOptionPane.showMessageDialog(null, "Please select a Vaccination Center to proceed!", "Error",JOptionPane.ERROR_MESSAGE);
         }
         else{
-            JOptionPane.showMessageDialog(null, "Operation cancelled!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
-        }       
+            //Confirm Modified Appointment Details from user
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int confirm = JOptionPane.showConfirmDialog(this, "Do you want to modify the vaccine supplies?",
+                    "Modify Vaccine Supply Confirmation", dialogButton);
+            if(confirm == 0){
+                VaccineCenter vc = new VaccineCenter(centerID);
+                boolean modified = vc.modifyCenterSupply(centerID);
+                if(modified == true){
+                    JOptionPane.showMessageDialog(null, "Vaccine supply is updated!", "Modification Successful",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Please ensure only numbers are entered!", "Error",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Operation cancelled!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
+            }       
+        }
     }//GEN-LAST:event_btnModifySupplyActionPerformed
 
     private void tblVaccineSupplyKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblVaccineSupplyKeyTyped
@@ -300,6 +328,16 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_tblVaccineSupplyKeyTyped
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     
     public static void main(String args[]) {
@@ -335,6 +373,7 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnModifyCenter;
     private javax.swing.JButton btnModifySupply;
     private javax.swing.JButton btnSearch;

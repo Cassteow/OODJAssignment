@@ -5,15 +5,16 @@
  */
 package VaccinationProgram;
 
-/**
- *
- * @author FA506I
- */
-public class FrmRegistrationRecordsPersonnel extends javax.swing.JFrame {
 
-    /**
-     * Creates new form RegistrationRecordsPersonnel
-     */
+public class FrmRegistrationRecordsPersonnel extends javax.swing.JFrame {
+    String frmAccID, name, accID;
+    String user = "Personnel";
+    
+    FrmRegistrationRecordsPersonnel(String aID, String n) {
+        this.frmAccID = aID;
+        this.name = n;
+        initComponents();
+    }
     public FrmRegistrationRecordsPersonnel() {
         initComponents();
     }
@@ -31,10 +32,16 @@ public class FrmRegistrationRecordsPersonnel extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         txtSearchRegister = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btnAddNewRegistration = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("Registration Records");
 
@@ -47,14 +54,21 @@ public class FrmRegistrationRecordsPersonnel extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Add New");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAddNewRegistration.setText("Add New");
+        btnAddNewRegistration.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAddNewRegistrationActionPerformed(evt);
             }
         });
 
         jButton3.setText("View Details");
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -63,7 +77,9 @@ public class FrmRegistrationRecordsPersonnel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
+                        .addContainerGap()
+                        .addComponent(btnBack)
+                        .addGap(64, 64, 64)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(132, 132, 132)
@@ -76,7 +92,7 @@ public class FrmRegistrationRecordsPersonnel extends javax.swing.JFrame {
                 .addContainerGap(132, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAddNewRegistration, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(56, 56, 56))
@@ -85,16 +101,18 @@ public class FrmRegistrationRecordsPersonnel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBack))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(17, 17, 17)
                 .addComponent(txtSearchRegister, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
+                    .addComponent(btnAddNewRegistration)
                     .addComponent(jButton3))
                 .addContainerGap())
         );
@@ -106,9 +124,21 @@ public class FrmRegistrationRecordsPersonnel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnAddNewRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewRegistrationActionPerformed
+        //Add code to get accID selected by user
+        this.dispose();       
+        new FrmAddRegistration(accID, name, user).setVisible(true);
+    }//GEN-LAST:event_btnAddNewRegistrationActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -147,8 +177,9 @@ public class FrmRegistrationRecordsPersonnel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddNewRegistration;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

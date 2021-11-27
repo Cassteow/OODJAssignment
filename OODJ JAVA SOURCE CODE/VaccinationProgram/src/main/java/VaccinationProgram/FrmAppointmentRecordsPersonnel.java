@@ -26,7 +26,6 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
         catch(IOException ex){
             JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
         }
-        DefaultTableModel model = (DefaultTableModel)tblApptRecords.getModel();
            
     }
     
@@ -47,7 +46,6 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
         catch(IOException ex){
             JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
         }
-        DefaultTableModel model = (DefaultTableModel)tblApptRecords.getModel();
         
     }
 
@@ -69,8 +67,14 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblApptRecords = new javax.swing.JTable();
         btnViewAll = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("COVID-19 Vaccination Appointments");
 
@@ -138,6 +142,13 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
             }
         });
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,7 +174,9 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
                                 .addGap(30, 30, 30)
                                 .addComponent(btnSearch))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(215, 215, 215)
+                        .addContainerGap()
+                        .addComponent(btnBack)
+                        .addGap(130, 130, 130)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(240, 240, 240)
@@ -174,8 +187,10 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBack))
+                .addGap(11, 11, 11)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -262,6 +277,16 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tblApptRecordsMouseClicked
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -307,6 +332,7 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAppt;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnViewAll;
     private javax.swing.JButton btnViewAppt;

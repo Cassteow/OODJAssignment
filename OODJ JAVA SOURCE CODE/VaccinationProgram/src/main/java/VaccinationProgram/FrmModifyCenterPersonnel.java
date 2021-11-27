@@ -59,17 +59,26 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        cmbStartDay = new javax.swing.JComboBox<>();
-        jLabel12 = new javax.swing.JLabel();
-        cmbEndDay = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         cmbStartTime = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         cmbEndTime = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
+        chbSunday = new javax.swing.JCheckBox();
+        chbMonday = new javax.swing.JCheckBox();
+        chbTuesday = new javax.swing.JCheckBox();
+        chbWednesday = new javax.swing.JCheckBox();
+        chbThursday = new javax.swing.JCheckBox();
+        chbFriday = new javax.swing.JCheckBox();
+        chbSaturday = new javax.swing.JCheckBox();
+        btnBack = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lblCenterID.setText("SBJ");
 
@@ -102,14 +111,6 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
 
         jLabel10.setText("Operating Time:");
 
-        jLabel11.setText("Start Day");
-
-        cmbStartDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }));
-
-        jLabel12.setText("End Day");
-
-        cmbEndDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" }));
-
         jLabel13.setText("Start Time");
 
         cmbStartTime.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6:00 am", "7:00 am", "8:00 am", "9:00 am", "10:00 am", "11:00 am", "12:00 pm", "1:00 pm", "2:00 pm", "3:00 pm" }));
@@ -121,6 +122,52 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
         cmbEndTime.setSelectedIndex(5);
 
         jLabel15.setText("New Information");
+
+        chbSunday.setText("Sunday");
+        chbSunday.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbSundayActionPerformed(evt);
+            }
+        });
+
+        chbMonday.setText("Monday");
+        chbMonday.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbMondayActionPerformed(evt);
+            }
+        });
+
+        chbTuesday.setText("Tuesday");
+        chbTuesday.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbTuesdayActionPerformed(evt);
+            }
+        });
+
+        chbWednesday.setText("Wednesday");
+        chbWednesday.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbWednesdayActionPerformed(evt);
+            }
+        });
+
+        chbThursday.setText("Thursday");
+        chbThursday.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbThursdayActionPerformed(evt);
+            }
+        });
+
+        chbFriday.setText("Friday");
+
+        chbSaturday.setText("Saturday");
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,30 +186,30 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(46, 46, 46)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel12))
-                                .addGap(8, 8, 8))
+                                .addGap(92, 92, 92)
+                                .addComponent(jLabel14))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(cmbStartTime, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cmbStartDay, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel13))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cmbEndDay, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbEndTime, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(cmbStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel13)
+                                    .addComponent(chbTuesday))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(chbSunday)
+                            .addComponent(chbMonday)
+                            .addComponent(chbWednesday)
+                            .addComponent(chbThursday)
+                            .addComponent(chbFriday)
+                            .addComponent(chbSaturday))))
                 .addContainerGap(59, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
@@ -176,6 +223,8 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
                             .addComponent(lblCenterDay))
                         .addGap(105, 105, 105))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addGap(122, 122, 122))))
             .addGroup(layout.createSequentialGroup()
@@ -187,8 +236,10 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(btnBack))
+                .addGap(21, 21, 21)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -209,15 +260,22 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
                 .addGap(66, 66, 66)
                 .addComponent(jLabel15)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12))
+                    .addComponent(chbSunday))
+                .addGap(1, 1, 1)
+                .addComponent(chbMonday)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbStartDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbEndDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(chbTuesday)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chbWednesday)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chbThursday)
+                .addGap(1, 1, 1)
+                .addComponent(chbFriday)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chbSaturday)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel13)
@@ -235,10 +293,38 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModifyCenterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyCenterActionPerformed
+        String days = "";
+        
+        //Get Operating days
+        if(FrmModifyCenterPersonnel.chbSunday.isSelected()){
+            days = days+"Sun,";
+        }
+        if(FrmModifyCenterPersonnel.chbMonday.isSelected()){
+            days = days+"Mon,";
+        }
+        if(FrmModifyCenterPersonnel.chbTuesday.isSelected()){
+            days = days+"Tue,";
+        }
+        if(FrmModifyCenterPersonnel.chbWednesday.isSelected()){
+            days = days+"Wed,";
+        }
+        if(FrmModifyCenterPersonnel.chbThursday.isSelected()){
+            days = days+"Thu,";
+        }
+        if(FrmModifyCenterPersonnel.chbFriday.isSelected()){
+            days = days+"Fri,";
+        }
+        if(FrmModifyCenterPersonnel.chbSaturday.isSelected()){
+            days = days+"Sat,";
+        }
+        
+        if (days.endsWith(",")) {
+            days = days.substring(0, days.length() - 1);
+        }
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int confirm = JOptionPane.showConfirmDialog(this, "Please confirm the new Vaccination Center information details below:"
-                + "\nCenter ID: "+centerID+"\nCenter Location: "+lblCenterLocation.getText()+"\nOperating Days: "+cmbStartDay.getSelectedItem().toString()+" - "+
-                cmbEndDay.getSelectedItem().toString()+"\nOperating Time: "+cmbStartTime.getSelectedItem().toString()
+                + "\nCenter ID: "+centerID+"\nCenter Location: "+lblCenterLocation.getText()+"\nOperating Days: "+days+
+                "\nOperating Time: "+cmbStartTime.getSelectedItem().toString()
                 +" - "+cmbEndTime.getSelectedItem().toString(),
                 "Vaccination Center Information Confirmation", dialogButton);
         if(confirm == 0){
@@ -255,6 +341,36 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnModifyCenterActionPerformed
+
+    private void chbSundayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbSundayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chbSundayActionPerformed
+
+    private void chbMondayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbMondayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chbMondayActionPerformed
+
+    private void chbTuesdayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbTuesdayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chbTuesdayActionPerformed
+
+    private void chbWednesdayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbWednesdayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chbWednesdayActionPerformed
+
+    private void chbThursdayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbThursdayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chbThursdayActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        new FrmCenterNSupplyPersonnel(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        new FrmCenterNSupplyPersonnel(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -292,14 +408,18 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnModifyCenter;
-    public static javax.swing.JComboBox<String> cmbEndDay;
+    public static javax.swing.JCheckBox chbFriday;
+    public static javax.swing.JCheckBox chbMonday;
+    public static javax.swing.JCheckBox chbSaturday;
+    public static javax.swing.JCheckBox chbSunday;
+    public static javax.swing.JCheckBox chbThursday;
+    public static javax.swing.JCheckBox chbTuesday;
+    public static javax.swing.JCheckBox chbWednesday;
     public static javax.swing.JComboBox<String> cmbEndTime;
-    public static javax.swing.JComboBox<String> cmbStartDay;
     public static javax.swing.JComboBox<String> cmbStartTime;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;

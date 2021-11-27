@@ -42,11 +42,15 @@ public class FrmModifyApptSelectVaccine extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cmbVaccineName = new javax.swing.JComboBox<>();
         btnModifyAppt = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -68,16 +72,25 @@ public class FrmModifyApptSelectVaccine extends javax.swing.JFrame {
             }
         });
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(89, 89, 89)
+                .addGap(5, 5, 5)
+                .addComponent(btnBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,12 +102,14 @@ public class FrmModifyApptSelectVaccine extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBack))
+                .addGap(27, 27, 27)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(cmbVaccineName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(btnModifyAppt)
                 .addGap(21, 21, 21))
         );
@@ -113,25 +128,40 @@ public class FrmModifyApptSelectVaccine extends javax.swing.JFrame {
                 "Appointment Details Confirmation", dialogButton);
         if(confirm == 0){
             Appointment appt = new Appointment(apptID, vacDate, vacTime, vacLocation, vacName, accID);
-            appt.modifyAppointment(appt.getAppointmentID(), appt.getAppointmentDate(), appt.getAppointmentTime(), appt.getAppointmentLocation(), appt.getApptVaccineName(), appt.getAccountID());
-            this.setVisible(false);
+            boolean modified = appt.modifyAppointment(appt.getAppointmentID(), appt.getAppointmentDate(), appt.getAppointmentTime(), appt.getAppointmentLocation(), appt.getApptVaccineName(), appt.getAccountID());
+            if(modified == true){
+                JOptionPane.showMessageDialog(null, "Appointment is modified succesfully.", "Appointment Details Modified",JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                //Go back to Main Menu for respective user
+                if(user == "Personnel"){
+                    new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+                }
+                else if(user == "People"){
+                    new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+                this.dispose();
             
-            //Go back to Main Menu for respective user
-            if(user == "Personnel"){
-                new FrmPersonnelMainMenu().setVisible(true);
+                if(user == "Personnel"){
+                    new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+                }
+                else if(user == "People"){
+                    new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+                }
             }
-            else if(user == "People"){
-                new FrmPeopleMainMenu().setVisible(true);
-            }
+            
+            
         }else{
             JOptionPane.showMessageDialog(null, "Operation cancelled!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
-            this.setVisible(false);
+            this.dispose();
             
             if(user == "Personnel"){
-                new FrmPersonnelMainMenu().setVisible(true);
+                new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
             }
             else if(user == "People"){
-                new FrmPeopleMainMenu().setVisible(true);
+                new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
             }
             
         }
@@ -150,6 +180,28 @@ public class FrmModifyApptSelectVaccine extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formWindowActivated
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+            
+        if(user == "Personnel"){
+            new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+        }
+        else if(user == "People"){
+            new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+        }
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+            
+        if(user == "Personnel"){
+            new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+        }
+        else if(user == "People"){
+            new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
    
     public static void main(String args[]) {
         
@@ -161,6 +213,7 @@ public class FrmModifyApptSelectVaccine extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnModifyAppt;
     private javax.swing.JComboBox<String> cmbVaccineName;
     private javax.swing.JLabel jLabel1;

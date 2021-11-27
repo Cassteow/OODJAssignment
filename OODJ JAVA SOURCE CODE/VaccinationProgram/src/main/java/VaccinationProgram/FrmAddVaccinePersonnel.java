@@ -40,7 +40,7 @@ public class FrmAddVaccinePersonnel extends javax.swing.JFrame {
         addNewBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         backBtn.setText("Back");
 

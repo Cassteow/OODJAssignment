@@ -1,19 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package VaccinationProgram;
 
-/**
- *
- * @author eugen
- */
-public class FrmPeopleMainMenu extends javax.swing.JFrame {
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
-    /**
-     * Creates new form FrmMainMenuRegistrationPeople
-     */
+
+public class FrmPeopleMainMenu extends javax.swing.JFrame {
+    String frmAccID, name, user = "People";
+
+    
+    FrmPeopleMainMenu(String aID, String n){
+        this.frmAccID = aID;
+        this.name = n;
+        initComponents();
+        
+        userNameLbl.setText(n);
+    }
     public FrmPeopleMainMenu() {
         initComponents();
     }
@@ -34,7 +39,12 @@ public class FrmPeopleMainMenu extends javax.swing.JFrame {
         vaccinationInformationBtn = new javax.swing.JButton();
         logOutBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Welcome Back,");
@@ -52,11 +62,26 @@ public class FrmPeopleMainMenu extends javax.swing.JFrame {
 
         vaccinationAppointmentBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         vaccinationAppointmentBtn.setText("Vaccination Appointment");
+        vaccinationAppointmentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vaccinationAppointmentBtnActionPerformed(evt);
+            }
+        });
 
         vaccinationInformationBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        vaccinationInformationBtn.setText("Vaccination Information");
+        vaccinationInformationBtn.setText("Vaccination Status & Information");
+        vaccinationInformationBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vaccinationInformationBtnActionPerformed(evt);
+            }
+        });
 
         logOutBtn.setText("Log Out");
+        logOutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logOutBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,7 +99,7 @@ public class FrmPeopleMainMenu extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(vaccinationInformationBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(vaccinationAppointmentBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                            .addComponent(vaccinationAppointmentBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(registrationDetailBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(66, 66, 66))
             .addGroup(layout.createSequentialGroup()
@@ -95,7 +120,7 @@ public class FrmPeopleMainMenu extends javax.swing.JFrame {
                 .addComponent(vaccinationAppointmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(vaccinationInformationBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(logOutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -106,6 +131,49 @@ public class FrmPeopleMainMenu extends javax.swing.JFrame {
     private void registrationDetailBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationDetailBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_registrationDetailBtnActionPerformed
+
+    private void vaccinationAppointmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vaccinationAppointmentBtnActionPerformed
+        boolean apptExist = false;
+        try{
+            File file = new File("Appointment.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String checkLine = null;
+            while((checkLine = br.readLine())!=null){
+                String[] temp = checkLine.split(";");         
+                    if(temp[5].equals(frmAccID)){
+                        apptExist = true;                       
+                    }
+            }
+            br.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        
+        if(apptExist == true){
+            this.dispose();
+            new FrmViewApptPeople(frmAccID, name).setVisible(true); 
+        }else{
+            this.dispose();
+            new FrmAddAppointmentPeople(frmAccID, name).setVisible(true); 
+        }
+               
+    }//GEN-LAST:event_vaccinationAppointmentBtnActionPerformed
+
+    private void vaccinationInformationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vaccinationInformationBtnActionPerformed
+        this.dispose();
+        new FrmStatusPeople(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_vaccinationInformationBtnActionPerformed
+
+    private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
+        this.dispose();
+        new FrmMainLogin().setVisible(true);
+    }//GEN-LAST:event_logOutBtnActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        new FrmMainLogin().setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

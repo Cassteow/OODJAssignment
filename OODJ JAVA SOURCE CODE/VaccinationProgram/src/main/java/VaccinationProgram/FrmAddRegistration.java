@@ -1,20 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package VaccinationProgram;
 
-/**
- *
- * @author eugen
- */
-public class FrmAddRegistrationPeople extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmAddRegistrationPeople
-     */
-    public FrmAddRegistrationPeople() {
+public class FrmAddRegistration extends javax.swing.JFrame {
+    String accID, name, user;
+
+    public FrmAddRegistration(String aID, String n,String u) {
+        this.accID = aID;
+        this.name = n;
+        this.user = u;
+        initComponents();
+    }
+    
+    public FrmAddRegistration() {
         initComponents();
     }
 
@@ -54,7 +52,12 @@ public class FrmAddRegistrationPeople extends javax.swing.JFrame {
         poepleRegistrationCitizenRadioBtn = new javax.swing.JRadioButton();
         poepleRegistrationNonCitizenRadioBtn = new javax.swing.JRadioButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Vaccine Registration");
@@ -295,6 +298,16 @@ public class FrmAddRegistrationPeople extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_peopleRegistrationPasswordTxtBoxActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        if(user == "Personnel"){
+            new FrmPersonnelMainMenu(accID, name).setVisible(true);
+        }
+        else if(user == "People"){
+            new FrmMainLogin().setVisible(true);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -312,20 +325,21 @@ public class FrmAddRegistrationPeople extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAddRegistrationPeople.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddRegistration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAddRegistrationPeople.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddRegistration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAddRegistrationPeople.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddRegistration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAddRegistrationPeople.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddRegistration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmAddRegistrationPeople().setVisible(true);
+                new FrmAddRegistration().setVisible(true);
             }
         });
     }

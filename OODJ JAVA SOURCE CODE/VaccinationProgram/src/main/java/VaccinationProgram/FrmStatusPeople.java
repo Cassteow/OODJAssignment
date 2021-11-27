@@ -1,19 +1,39 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package VaccinationProgram;
 
-/**
- *
- * @author FA506I
- */
-public class FrmStatusPeople extends javax.swing.JFrame {
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
-    /**
-     * Creates new form FrmStatusPeople
-     */
+
+public class FrmStatusPeople extends javax.swing.JFrame {
+    String frmAccID, name;
+    
+    FrmStatusPeople(String aID, String n){
+        this.frmAccID=aID;
+        this.name =n;
+        initComponents();
+        
+        try{
+            File file = new File("People.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));           
+            Object[] lines = br.lines().toArray();
+            //Load records from text file row by row
+            for(int i = 0; i<lines.length;i++){
+                String[] row = lines[i].toString().split(";");
+                if(row[0].equals(frmAccID)){
+                    lblName.setText(row[2]);
+                    lblStatus.setText(row[10]);
+                }
+            }
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
     public FrmStatusPeople() {
         initComponents();
     }
@@ -31,12 +51,18 @@ public class FrmStatusPeople extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblStatus = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnCenter = new javax.swing.JButton();
         btnVaccine = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("Vaccination Information");
 
@@ -46,13 +72,30 @@ public class FrmStatusPeople extends javax.swing.JFrame {
 
         lblName.setText("John Smith");
 
-        jLabel4.setText("Fully Vaccinated");
+        lblStatus.setText("Fully Vaccinated");
 
         jLabel5.setText("Select to view or search:");
 
-        btnCenter.setText("Vaccination Center");
+        btnCenter.setText("Vaccination Center and Supply");
+        btnCenter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCenterActionPerformed(evt);
+            }
+        });
 
         btnVaccine.setText("Vaccine Information");
+        btnVaccine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVaccineActionPerformed(evt);
+            }
+        });
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,7 +104,9 @@ public class FrmStatusPeople extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
+                        .addContainerGap()
+                        .addComponent(btnBack)
+                        .addGap(51, 51, 51)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(65, 65, 65)
@@ -71,7 +116,7 @@ public class FrmStatusPeople extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblName)
-                            .addComponent(jLabel4)))
+                            .addComponent(lblStatus)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(124, 124, 124)
                         .addComponent(jLabel5))
@@ -79,33 +124,55 @@ public class FrmStatusPeople extends javax.swing.JFrame {
                         .addGap(99, 99, 99)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnVaccine, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))))
-                .addContainerGap(125, Short.MAX_VALUE))
+                            .addComponent(btnVaccine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBack))
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lblName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(lblStatus))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel5)
                 .addGap(26, 26, 26)
                 .addComponent(btnCenter)
                 .addGap(18, 18, 18)
                 .addComponent(btnVaccine)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCenterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCenterActionPerformed
+        this.dispose();
+        new FrmCenterNSupplyPeople(frmAccID,name).setVisible(true);
+    }//GEN-LAST:event_btnCenterActionPerformed
+
+    private void btnVaccineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaccineActionPerformed
+        this.dispose();
+        new FrmCenterNSupplyPeople(frmAccID,name).setVisible(true);
+    }//GEN-LAST:event_btnVaccineActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -143,13 +210,14 @@ public class FrmStatusPeople extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCenter;
     private javax.swing.JButton btnVaccine;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblStatus;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package VaccinationProgram;
 
 /**
@@ -10,10 +6,14 @@ package VaccinationProgram;
  * @author eugen
  */
 public class FrmModifyVaccinePersonnel extends javax.swing.JFrame {
-
-    /**
-     * Creates new form FrmModifyVaccinePersonnel
-     */
+    String frmAccID, name;
+    
+    FrmModifyVaccinePersonnel(String aID, String n){
+        this.frmAccID = aID;
+        this.name = n;
+        initComponents();
+    }
+    
     public FrmModifyVaccinePersonnel() {
         initComponents();
     }
@@ -47,12 +47,21 @@ public class FrmModifyVaccinePersonnel extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         vaccineIdTxtBox = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        cancelBtn = new javax.swing.JButton();
         modifyBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("New Vaccine Information");
@@ -90,13 +99,6 @@ public class FrmModifyVaccinePersonnel extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Modification");
-
-        cancelBtn.setText("Cancel");
-        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelBtnActionPerformed(evt);
-            }
-        });
 
         modifyBtn.setText("Modify");
 
@@ -153,9 +155,7 @@ public class FrmModifyVaccinePersonnel extends javax.swing.JFrame {
                         .addComponent(jLabel2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(44, 291, Short.MAX_VALUE)
                 .addComponent(modifyBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
         );
@@ -203,18 +203,22 @@ public class FrmModifyVaccinePersonnel extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(dosesTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelBtn)
-                    .addComponent(modifyBtn))
+                .addComponent(modifyBtn)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cancelBtnActionPerformed
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        this.dispose();
+        new FrmVaccineInformationPersonnel(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        new FrmVaccineInformationPersonnel(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -255,7 +259,6 @@ public class FrmModifyVaccinePersonnel extends javax.swing.JFrame {
     private javax.swing.JLabel COOlbl;
     private javax.swing.JTextField COOtxtBox;
     private javax.swing.JButton backBtn;
-    private javax.swing.JButton cancelBtn;
     private javax.swing.JLabel dosesLbl;
     private javax.swing.JTextField dosesTxtBox;
     private javax.swing.JLabel jLabel1;

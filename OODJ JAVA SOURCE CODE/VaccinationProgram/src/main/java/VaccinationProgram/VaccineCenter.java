@@ -19,14 +19,15 @@ public class VaccineCenter {
     public String centerLocation;
     public String centerDay;
     public String centerTime;
-    public String vaccineSupplyName;
-    public String vaccineSupplyCount;
+    public String[] vaccineSupplyName;
+    public int[] vaccineSupplyCount;
     
     //Constructor with 1 attribute
     public VaccineCenter(String id){
         this.centerID = id;
     }
     
+    //Get Set Methods
     public VaccineCenter(String id, String L){
         this.centerID = id;
         this.centerLocation = L;
@@ -50,6 +51,26 @@ public class VaccineCenter {
     
     public String getCenterDay(){
         return centerDay;
+    }
+    
+    public void setCenterDay(String cd){
+        this.centerDay = cd;
+    }
+    
+    public String[] getVaccineSupplyName(){
+        return vaccineSupplyName;
+    }
+    
+    public void setVaccineSupplyName(String[] vsn){
+        this.vaccineSupplyName = vsn;
+    }
+    
+    public int[] getVaccineSupplyCount(){
+        return vaccineSupplyCount;
+    }
+    
+    public void setVaccineSupplyCount(int[] vsc){
+        this.vaccineSupplyCount = vsc;
     }
     
     //Method to search Vaccine center using ID (for Personnel)
@@ -115,9 +136,36 @@ public class VaccineCenter {
         Boolean validateTime = false;
         String centerID = FrmModifyCenterPersonnel.lblCenterID.getText();
         String centerLocation = FrmModifyCenterPersonnel.lblCenterLocation.getText();
+        String days = "";
         
-        String startDay = FrmModifyCenterPersonnel.cmbStartDay.getSelectedItem().toString();
-        String endDay = FrmModifyCenterPersonnel.cmbEndDay.getSelectedItem().toString();
+        //Get Operating days
+        if(FrmModifyCenterPersonnel.chbSunday.isSelected()){
+            days = days+"Sun,";
+        }
+        if(FrmModifyCenterPersonnel.chbMonday.isSelected()){
+            days = days+"Mon,";
+        }
+        if(FrmModifyCenterPersonnel.chbTuesday.isSelected()){
+            days = days+"Tue,";
+        }
+        if(FrmModifyCenterPersonnel.chbWednesday.isSelected()){
+            days = days+"Wed,";
+        }
+        if(FrmModifyCenterPersonnel.chbThursday.isSelected()){
+            days = days+"Thu,";
+        }
+        if(FrmModifyCenterPersonnel.chbFriday.isSelected()){
+            days = days+"Fri,";
+        }
+        if(FrmModifyCenterPersonnel.chbSaturday.isSelected()){
+            days = days+"Sat,";
+        }
+        
+        if (days.endsWith(",")) {
+            days = days.substring(0, days.length() - 1);
+        }
+        
+        
         String startTime = FrmModifyCenterPersonnel.cmbStartTime.getSelectedItem().toString();
         String endTime = FrmModifyCenterPersonnel.cmbEndTime.getSelectedItem().toString();
         
@@ -167,7 +215,7 @@ public class VaccineCenter {
                     if(currentAppt[0].equals(centerID)){
                         bw.append(centerID+";");
                         bw.append(centerLocation+";");
-                        bw.append(startDay+" - "+endDay+";");
+                        bw.append(days+";");
                         bw.append(startTime+" - "+endTime+"\n");                    
                     }
                     else{

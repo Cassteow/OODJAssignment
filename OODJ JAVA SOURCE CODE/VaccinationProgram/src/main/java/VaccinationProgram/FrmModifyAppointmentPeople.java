@@ -9,11 +9,11 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 
-public class FrmModifyAppointmentPersonnel extends javax.swing.JFrame {
+public class FrmModifyAppointmentPeople extends javax.swing.JFrame {
     String frmAccID, name;
-    String user = "Personnel";
+    String user = "People";
 
-    FrmModifyAppointmentPersonnel(String aID, String n, String apptID){
+    FrmModifyAppointmentPeople(String aID, String n, String apptID){
         this.frmAccID=aID;
         this.name = n;
         
@@ -30,7 +30,7 @@ public class FrmModifyAppointmentPersonnel extends javax.swing.JFrame {
         lblVaccine.setText(details[5]); 
     }
     
-    public FrmModifyAppointmentPersonnel() {
+    public FrmModifyAppointmentPeople() {
         initComponents();
     }
 
@@ -315,12 +315,12 @@ public class FrmModifyAppointmentPersonnel extends javax.swing.JFrame {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         this.dispose();
-        new FrmAppointmentRecordsPersonnel(frmAccID, name).setVisible(true);
+        new FrmViewApptPeople(frmAccID, name).setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.dispose();
-        new FrmAppointmentRecordsPersonnel(frmAccID, name).setVisible(true);
+        new FrmViewApptPeople(frmAccID, name).setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     
@@ -328,7 +328,7 @@ public class FrmModifyAppointmentPersonnel extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmModifyAppointmentPersonnel().setVisible(true);
+                new FrmModifyAppointmentPeople().setVisible(true);
             }
         });
     }

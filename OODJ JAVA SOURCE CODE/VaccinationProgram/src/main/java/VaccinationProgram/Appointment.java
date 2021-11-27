@@ -4,7 +4,7 @@ package VaccinationProgram;
 import java.io.*;
 import java.util.*;
 import javax.swing.JOptionPane;
-
+import java.text.SimpleDateFormat;
 
 public class Appointment {
     public String appointmentID;
@@ -133,24 +133,7 @@ public class Appointment {
         return verified;
     }
     
-    //Method to Add New Appointment Record into Text File
-    public void addNewAppointment(String apptID, String d, String t, String L, String vacName, String accID){
-        try{
-                File file = new File("Appointment.txt");
-                BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-                bw.append(apptID+";");
-                bw.append(d+";");
-                bw.append(t+";");
-                bw.append(L+";");
-                bw.append(vacName+";");
-                bw.append(accID+"\n");
-                bw.close();
-            }
-            catch(IOException ex){
-                JOptionPane.showMessageDialog(null, "An error has occured!\nPlease try again later!", "Error",JOptionPane.WARNING_MESSAGE);
-            }
-    }
-    
+   
     //Method to get array of vaccines available for the selected vaccination center location
     public String[] checkVaccineAvailable(String vacLocation){
         String[] vaccineAvailable = new String[1];
@@ -227,6 +210,78 @@ public class Appointment {
         }
         return limitNotExceeded;
     } 
+    
+    //Method to verify selected day is valid or not (check date after today's date AND available during operating days
+    public boolean verifyApptDay(Date selectedDay, String centerName){
+        boolean verified = false;
+        boolean verifyDay = false; //verify whether date is on an operating day
+        boolean verifyAfterToday = false; //verify whether date is after current date
+        
+        String apptDay = null;
+        Calendar c = Calendar.getInstance();
+        apptDay = new SimpleDateFormat("EE").format(selectedDay);
+                
+        //Get current date for today
+        Date currentDate = new Date();
+        //Verify date is after today
+        if(selectedDay.after(currentDate)){
+            verifyAfterToday = true;
+        }
+        //Get Operating days of selected location
+        String[] operatingDays = new String[1];
+        try{
+            File file = new File("VaccinationCenter.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));           
+            String checkLine = null;
+            //Load records from text file row by row
+            while((checkLine = br.readLine())!=null){
+                String[] row = checkLine.split(";");
+                if(row[1].equals(centerName)){
+                   String[] temp = row[2].toString().split(",");
+                   operatingDays = new String[temp.length];
+                   for(int j = 0; j< temp.length; j++){
+                       operatingDays[j] = temp[j];
+                   }
+                }
+            }
+            br.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        
+        //Check selected day is one of the operating days or not
+        for(int cnt = 0; cnt<operatingDays.length; cnt++){
+            if(operatingDays[cnt].equals(apptDay)){
+                verifyDay = true;
+            }
+        }
+        
+        if(verifyDay == true && verifyAfterToday == true){
+            verified = true;
+        }
+        
+        return verified;
+    }
+    
+     //Method to Add New Appointment Record into Text File
+    public void addNewAppointment(String apptID, String d, String t, String L, String vacName, String accID){
+        try{
+                File file = new File("Appointment.txt");
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+                bw.append(apptID+";");
+                bw.append(d+";");
+                bw.append(t+";");
+                bw.append(L+";");
+                bw.append(vacName+";");
+                bw.append(accID+"\n");
+                bw.close();
+            }
+            catch(IOException ex){
+                JOptionPane.showMessageDialog(null, "An error has occured!\nPlease try again later!", "Error",JOptionPane.WARNING_MESSAGE);
+            }
+    }
+    
     
     //Method to display Appointment Details 
     public String[] viewAppointmentDetails(String aID){
@@ -322,12 +377,72 @@ public class Appointment {
         catch(IOException ex){
             JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
         }
+      
+        return modified;
+    }
+    
+    //Method to cancel appointment
+    public boolean cancelAppointment(String apptID){
+        boolean modified = true;
+        File file = new File("Appointment.txt");
+        File tempFile = new File("Temp.txt");
         
-        if(modified == true){
-            JOptionPane.showMessageDialog(null, "Appointment is modified successfully.", "Appointment Modified",JOptionPane.INFORMATION_MESSAGE);
+        //Empty the temp file content
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
+            bw.write("");
+            bw.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        //Read original file and write modified data into temp file
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
+            String line;
+            while((line = br.readLine())!= null){
+                String[] currentAppt = line.split(";");
+                if(currentAppt[0].equals(apptID)){
+                    //Do not append if the current line matches the appointment ID (Deletion)
+                }
+                else{
+                    bw.append(line+"\n");
+                }
+            }
+            bw.close();
+            br.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        
+        //Empty the original file
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write("");
+            bw.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        
+        //Write modified data into original file
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(tempFile));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            String line;
+            while((line = br.readLine())!= null){
+                bw.append(line+"\n");
+            } 
+            bw.close();
+            br.close();
+            modified = true;
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
         }
         return modified;
     }
+    
 }
-
-

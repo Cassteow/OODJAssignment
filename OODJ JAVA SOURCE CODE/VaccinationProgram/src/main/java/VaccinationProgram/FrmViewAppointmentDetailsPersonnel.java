@@ -1,6 +1,8 @@
 
 package VaccinationProgram;
 
+import javax.swing.JOptionPane;
+
 
 
 public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
@@ -55,6 +57,7 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
         lblVaccine = new javax.swing.JLabel();
         btnModify = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -100,26 +103,26 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
         });
 
         btnCancel.setText("Cancel Appointment");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(79, 79, 79)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblApptID)
-                                .addComponent(lblAccountID)
-                                .addComponent(lblLocation)
-                                .addComponent(lblDate)
-                                .addComponent(lblTime)
-                                .addComponent(lblVaccine))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
@@ -127,7 +130,22 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7))
-                        .addGap(128, 128, 128)))
+                        .addGap(128, 128, 128))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblApptID)
+                                    .addComponent(lblAccountID)
+                                    .addComponent(lblLocation)
+                                    .addComponent(lblDate)
+                                    .addComponent(lblTime)
+                                    .addComponent(lblVaccine))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(42, 42, 42)
@@ -140,8 +158,10 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBack))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lblAccountID))
@@ -165,7 +185,7 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(lblVaccine))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModify)
                     .addComponent(btnCancel))
@@ -191,6 +211,37 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
         this.dispose();
         new FrmModifyAppointmentPersonnel(frmAccID, name, apptID).setVisible(true);
     }//GEN-LAST:event_btnModifyActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int confirm = JOptionPane.showConfirmDialog(this, "Do you want to cancel the appointment?",
+                "Appointment Cancellation Confirmation", dialogButton);
+        if(confirm == 0){
+            Appointment appt = new Appointment(apptID);
+            boolean cancelled = appt.cancelAppointment(apptID);
+            if(cancelled = true){
+                JOptionPane.showMessageDialog(null, "Appointment is cancelled succesfully.", "Appointment Details Modified",JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+                this.dispose();
+                new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Operation cancelled!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            new FrmPersonnelMainMenu().setVisible(true);
+        }
+        
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        new FrmAppointmentRecordsPersonnel(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,6 +281,7 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnModify;
     private javax.swing.JLabel jLabel1;

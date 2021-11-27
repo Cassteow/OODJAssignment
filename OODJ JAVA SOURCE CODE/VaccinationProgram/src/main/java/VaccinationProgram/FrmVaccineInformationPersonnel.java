@@ -9,12 +9,15 @@ package VaccinationProgram;
  *
  * @author eugen
  */
-public class FrmModifyMenuVaccineInformationPersonnel extends javax.swing.JFrame {
-
-    /**
-     * Creates new form FrmModifyMenuVaccineInformationPersonnel
-     */
-    public FrmModifyMenuVaccineInformationPersonnel() {
+public class FrmVaccineInformationPersonnel extends javax.swing.JFrame {
+    String frmAccID, name;
+    
+    FrmVaccineInformationPersonnel(String aID, String n){
+        this.frmAccID = aID;
+        this.name = n;
+        initComponents();
+    }
+    public FrmVaccineInformationPersonnel() {
         initComponents();
     }
 
@@ -46,7 +49,12 @@ public class FrmModifyMenuVaccineInformationPersonnel extends javax.swing.JFrame
         modifyBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Vaccine Information");
@@ -84,6 +92,11 @@ public class FrmModifyMenuVaccineInformationPersonnel extends javax.swing.JFrame
         deleteBtn.setText("Delete");
 
         modifyBtn.setText("Modify");
+        modifyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyBtnActionPerformed(evt);
+            }
+        });
 
         addBtn.setText("Add");
 
@@ -191,12 +204,22 @@ public class FrmModifyMenuVaccineInformationPersonnel extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void viewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_viewBtnActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void modifyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyBtnActionPerformed
+        new FrmModifyVaccinePersonnel(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_modifyBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,20 +238,21 @@ public class FrmModifyMenuVaccineInformationPersonnel extends javax.swing.JFrame
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmModifyMenuVaccineInformationPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVaccineInformationPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmModifyMenuVaccineInformationPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVaccineInformationPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmModifyMenuVaccineInformationPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVaccineInformationPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmModifyMenuVaccineInformationPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmVaccineInformationPersonnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmModifyMenuVaccineInformationPersonnel().setVisible(true);
+                new FrmVaccineInformationPersonnel().setVisible(true);
             }
         });
     }

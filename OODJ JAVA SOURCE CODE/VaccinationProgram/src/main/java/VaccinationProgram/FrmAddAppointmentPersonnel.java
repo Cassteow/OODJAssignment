@@ -206,12 +206,19 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
         
         //Use Method to ensure center do not exceed appointment limit
         Boolean verifyLimit = appt.checkAppointmentLimit(vacLocation, vacDate);
+        
+        //Use Method to verify date of appointment
+        Boolean verifyDay = appt.verifyApptDay(dcApptDate.getDate(), vacLocation);
         //Call FrmSelectVaccine if all conditions are validated
         if(verifyLimit == true){
             if(verifyAccountID == true){
-                this.setVisible(false);
-                new FrmSelectVaccineAppt(appt.accountID, appt.appointmentLocation,appt.appointmentDate, appt.appointmentTime, name, user, frmAccID, vaccineAvailable).setVisible(true);
-
+                if(verifyDay == true){
+                    this.setVisible(false);
+                    new FrmSelectVaccineAppt(appt.accountID, appt.appointmentLocation,appt.appointmentDate, appt.appointmentTime, name, user, frmAccID, vaccineAvailable).setVisible(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Selected Date is not available!\n Please select another date!", "Error",JOptionPane.WARNING_MESSAGE);
+                }
             }else{
                 JOptionPane.showMessageDialog(null, "Account ID is invalid or already has an appointment record!", "Error",JOptionPane.WARNING_MESSAGE);
             }   

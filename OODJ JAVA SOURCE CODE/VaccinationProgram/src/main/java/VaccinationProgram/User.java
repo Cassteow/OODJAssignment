@@ -65,40 +65,5 @@ public class User {
     public void ViewRegistration(String id){
         
     }
-    
-    //Method to Add New Appointment
-    public void AddNewAppointment(String id){
-        
-        
-    }
-    
-    //Method to Cancel Existing Appointment
-    public void CancelAppointment(String apptID){
-        
-    }
-    
-    //Method to View Existing Appointment
-    public void ViewAppointment(String apptID){
-        
-    }
-    
-    //Method to View Vaccine Center Details
-    public void ViewCenter(String centID){
-        
-    }
-    
-    //Method to Search Vaccine Center Details
-    public void SearchCenter(String search){
-        
-    }
-    
-    //Method to View Vaccine Information 
-    public void ViewVaccine(String vacID){
-        
-    }
-    
-    //Method to Search Vaccine Information
-    public void SearchVaccine(String search){
-        
-    }
+
 }

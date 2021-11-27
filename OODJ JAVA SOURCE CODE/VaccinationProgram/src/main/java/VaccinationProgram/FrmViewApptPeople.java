@@ -9,10 +9,10 @@ import javax.swing.JOptionPane;
 
 
 public class FrmViewApptPeople extends javax.swing.JFrame {
-    String accID, name, apptID;
+    String frmAccID, name, apptID;
     
     FrmViewApptPeople(String id, String n){
-        this.accID = id;
+        this.frmAccID = id;
         this.name = n;
         initComponents();
         //Get Appointment ID of user based on Account ID
@@ -23,7 +23,7 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
             //Load records from text file row by row
             for(int i = 0; i<lines.length;i++){
                 String[] row = lines[i].toString().split(";");
-                if(row[5].equals(accID)){
+                if(row[5].equals(frmAccID)){
                     apptID = row[0];
                 }
             }
@@ -73,8 +73,15 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
         lblVaccine = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         btnCancel = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        btnModify = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("COVID-19 Vaccination Appointment");
 
@@ -95,6 +102,25 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
         jLabel10.setText("Please arrive to the appointment location within the given time and date above.");
 
         btnCancel.setText("Cancel Appointment");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        btnModify.setText("Modify Appointment");
+        btnModify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifyActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,7 +132,9 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addComponent(jLabel10))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
+                        .addContainerGap()
+                        .addComponent(btnBack)
+                        .addGap(8, 8, 8)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -132,15 +160,19 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
                                         .addGap(19, 19, 19)
                                         .addComponent(jLabel2))))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(btnCancel)))
+                        .addGap(45, 45, 45)
+                        .addComponent(btnCancel)
+                        .addGap(47, 47, 47)
+                        .addComponent(btnModify)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel1)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBack))
                 .addGap(37, 37, 37)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -170,12 +202,53 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addGap(30, 30, 30)
-                .addComponent(btnCancel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancel)
+                    .addComponent(btnModify))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int confirm = JOptionPane.showConfirmDialog(this, "Do you want to cancel the appointment?",
+                "Appointment Cancellation Confirmation", dialogButton);
+        if(confirm == 0){
+            Appointment appt = new Appointment(apptID);
+            boolean cancelled = appt.cancelAppointment(apptID);
+            if(cancelled == true){
+                JOptionPane.showMessageDialog(null, "Appointment is cancelled succesfully.", "Appointment Details Modified",JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+                this.dispose();
+                new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Operation cancelled!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+        new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
+        this.dispose();
+        new FrmModifyAppointmentPeople(frmAccID, name, apptID).setVisible(true);
+    }//GEN-LAST:event_btnModifyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,7 +287,9 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnModify;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

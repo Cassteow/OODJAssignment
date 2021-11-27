@@ -1,3 +1,4 @@
 0121231234;123;John Smith;F123123;true;12-12-1990;0121231234;Selangor;false;true;Not Vaccinated
 0176871218;123;Cass Teow;F123455;true;27-03-2000;0176871218;Selangor;false;true;Partially Vaccinated
-0111231234;123;Lily Lee;F516516;16-05-1993;0111231234;Selangor;false;true;Fully Vaccinated
+0111231234;123;Lily Lee;F516516;true;16-05-1993;0111231234;Selangor;false;true;Partially Vaccinated
+0122223333;123;Nell Crain;F616616;true;18-09-1980;0122223333;Johor;false;true;Not Vaccinated
