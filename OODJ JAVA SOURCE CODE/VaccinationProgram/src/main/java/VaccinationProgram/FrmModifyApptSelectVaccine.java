@@ -127,8 +127,8 @@ public class FrmModifyApptSelectVaccine extends javax.swing.JFrame {
                 +"\nVaccine Name: "+vacName+"\nAccount ID: "+accID,
                 "Appointment Details Confirmation", dialogButton);
         if(confirm == 0){
-            Appointment appt = new Appointment(apptID, vacDate, vacTime, vacLocation, vacName, accID);
-            boolean modified = appt.modifyAppointment(appt.getAppointmentID(), appt.getAppointmentDate(), appt.getAppointmentTime(), appt.getAppointmentLocation(), appt.getApptVaccineName(), appt.getAccountID());
+            User u = new User();
+            boolean modified = u.modifyAppointment(apptID, vacDate, vacTime, vacLocation, vacName, accID);
             if(modified == true){
                 JOptionPane.showMessageDialog(null, "Appointment is modified succesfully.", "Appointment Details Modified",JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();

@@ -19,9 +19,9 @@ public class FrmModifyAppointmentPeople extends javax.swing.JFrame {
         
         initComponents();
         
-        Appointment appt = new Appointment(apptID);
+        User u = new User();
         //Call view appointment method from appointment class
-        String[] details = appt.viewAppointmentDetails(appt.appointmentID);
+        String[] details = u.viewAppointmentDetails(apptID);
         lblAccountID.setText(details[0]);
         lblApptID.setText(details[1]);
         lblLocation.setText(details[2]);

@@ -209,21 +209,33 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="SBJ"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCenterLocation">
       <Properties>
         <Property name="text" type="java.lang.String" value="Stadium Bukit Jalil"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCenterDay">
       <Properties>
         <Property name="text" type="java.lang.String" value="Mon - Sun"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCenterTime">
       <Properties>
         <Property name="text" type="java.lang.String" value="10.00am - 6.00pm"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
     </Component>

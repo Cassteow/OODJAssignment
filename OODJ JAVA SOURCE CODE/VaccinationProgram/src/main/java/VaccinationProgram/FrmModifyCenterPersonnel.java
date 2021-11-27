@@ -321,6 +321,7 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
         if (days.endsWith(",")) {
             days = days.substring(0, days.length() - 1);
         }
+        //Ask for confirmation to modify center information
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int confirm = JOptionPane.showConfirmDialog(this, "Please confirm the new Vaccination Center information details below:"
                 + "\nCenter ID: "+centerID+"\nCenter Location: "+lblCenterLocation.getText()+"\nOperating Days: "+days+
@@ -328,8 +329,9 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
                 +" - "+cmbEndTime.getSelectedItem().toString(),
                 "Vaccination Center Information Confirmation", dialogButton);
         if(confirm == 0){
-            VaccineCenter vc = new VaccineCenter(centerID);
-            boolean modified = vc.modifyCenterInfo();
+            //Call Modify Center Info Method
+            Personnel personnel = new Personnel();
+            boolean modified = personnel.modifyCenterInfo();
             if(modified == true){
                 JOptionPane.showMessageDialog(null, "Vaccination Center information is modified succesfully.", "Vaccination Center Modified",JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();

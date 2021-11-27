@@ -164,8 +164,8 @@ public class FrmSelectVaccineAppt extends javax.swing.JFrame {
                 +"\nVaccine Name: "+vacName+"\nAccount ID: "+accID,
                 "Appointment Details Confirmation", dialogButton);
         if(confirm == 0){
-            Appointment appt = new Appointment(apptID, vacDate, vacTime, vacLocation, vacName, accID);
-            appt.addNewAppointment(appt.appointmentID, appt.appointmentDate, appt.appointmentTime, appt.appointmentLocation, appt.apptVaccineName, appt.accountID);
+            User u = new User();
+            u.addNewAppointment(apptID, vacDate, vacTime, vacLocation, vacName,accID);
             this.dispose();
             
             JOptionPane.showMessageDialog(null, "The new appointment is added successfully!", "Appointment",JOptionPane.INFORMATION_MESSAGE);

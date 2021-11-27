@@ -150,10 +150,10 @@ public class FrmMainLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_personnelUserRadioBtnActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String accID = "cass";
+        String accID = "0176871218";
         String name = "Cass";
         this.dispose();
-        new FrmPersonnelMainMenu(accID, name).setVisible(true);       
+        new FrmPeopleMainMenu(accID, name).setVisible(true);       
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void lblRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseClicked

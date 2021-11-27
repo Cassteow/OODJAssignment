@@ -273,8 +273,8 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
         
         //Get text in search textfield
         String searchID = txtSearchID.getText();
-        VaccineCenter vc = new VaccineCenter(searchID);
-        vc.searchVaccineCenter(searchID);
+        Personnel personnel = new Personnel();
+        personnel.searchVaccineCenter(searchID);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
@@ -292,8 +292,9 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(null, "No records found.", "Error",JOptionPane.WARNING_MESSAGE);
         }
-        VaccineCenter vc = new VaccineCenter(centerID);
-        vc.searchVaccineCenter(centerID);
+        //Call Search Vaccination Center Method
+        Personnel personnel = new Personnel();
+        personnel.searchVaccineCenter(centerID);
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnModifySupplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifySupplyActionPerformed
@@ -307,8 +308,10 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
             int confirm = JOptionPane.showConfirmDialog(this, "Do you want to modify the vaccine supplies?",
                     "Modify Vaccine Supply Confirmation", dialogButton);
             if(confirm == 0){
-                VaccineCenter vc = new VaccineCenter(centerID);
-                boolean modified = vc.modifyCenterSupply(centerID);
+                //Call Modify Supply Method
+                Personnel personnel = new Personnel();
+                boolean modified = personnel.modifyCenterSupply(centerID);
+                
                 if(modified == true){
                     JOptionPane.showMessageDialog(null, "Vaccine supply is updated!", "Modification Successful",JOptionPane.INFORMATION_MESSAGE);
                 }

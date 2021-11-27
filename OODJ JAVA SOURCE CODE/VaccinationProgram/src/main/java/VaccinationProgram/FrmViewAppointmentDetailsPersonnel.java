@@ -14,9 +14,11 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
         this.apptID = apptID;
         initComponents();
         
-        Appointment appt = new Appointment(apptID);
-        //Call view appointment method from appointment class
-        String[] details = appt.viewAppointmentDetails(appt.appointmentID);
+        User u = new User();
+        //Call view appointment method 
+        String[] details = u.viewAppointmentDetails(apptID);
+        
+        
         lblAccountID.setText(details[0]);
         lblApptID.setText(details[1]);
         lblLocation.setText(details[2]);
@@ -217,8 +219,9 @@ public class FrmViewAppointmentDetailsPersonnel extends javax.swing.JFrame {
         int confirm = JOptionPane.showConfirmDialog(this, "Do you want to cancel the appointment?",
                 "Appointment Cancellation Confirmation", dialogButton);
         if(confirm == 0){
-            Appointment appt = new Appointment(apptID);
-            boolean cancelled = appt.cancelAppointment(apptID);
+            //Call Cancel Appointment Method
+            User u = new User();
+            boolean cancelled = u.cancelAppointment(apptID);
             if(cancelled = true){
                 JOptionPane.showMessageDialog(null, "Appointment is cancelled succesfully.", "Appointment Details Modified",JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();

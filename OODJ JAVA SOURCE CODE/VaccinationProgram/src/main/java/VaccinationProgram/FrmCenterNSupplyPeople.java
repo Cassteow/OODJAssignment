@@ -219,59 +219,9 @@ public class FrmCenterNSupplyPeople extends javax.swing.JFrame {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         //Get Search ID from text field
         centerID = txtSearchID.getText();
-        
-        boolean found = false;
-        try{
-            File file = new File("CenterSupplies.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            DefaultTableModel model = (DefaultTableModel)tblVaccineSupply.getModel();
-            Object[] lines = br.lines().toArray();
-            model.setRowCount(0); //Clear content in table
-            for(int i = 0; i<lines.length;i++){                
-                String[] row = lines[i].toString().split(";");
-                //if search text matches Appointment ID or account ID, display it
-                if(row[0].equals(centerID)){
-                    int vacCount = Integer.parseInt(row[2]);
-                    
-                    for(int j = 0; j<vacCount; j++){
-                        String[] loadVaccine = {row[(j+1)*3], row[1+(j+1)*3], row[2+(j+1)*3]};
-                        model.addRow(loadVaccine);
-                        found = true;
-                    }
-                }                
-            }
-        }
-        catch(IOException ex){
-            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
-        }
-        
-        try{
-            File file = new File("VaccinationCenter.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));           
-            Object[] lines = br.lines().toArray();
-            //Load records from text file row by row
-            for(int i = 0; i<lines.length;i++){
-                String[] row = lines[i].toString().split(";");
-                if(row[0].equals(centerID)){
-                    lblCenterID.setText(row[0]);
-                    lblCenterLocation.setText(row[1]);
-                    lblCenterDay.setText(row[2]);
-                    lblCenterTime.setText(row[3]);
-                }
-            }
-            br.close();
-        }
-        catch(IOException ex){
-            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
-        }
-        
-        if(found == false){
-            lblCenterID.setText("");
-            lblCenterLocation.setText("");
-            lblCenterDay.setText("");
-            lblCenterTime.setText("");
-            JOptionPane.showMessageDialog(null, "No records found.", "Error",JOptionPane.WARNING_MESSAGE);
-        }
+        //Call Search Vaccination Center Method
+        People ppl = new People();
+        ppl.searchVaccineCenter(centerID);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
@@ -290,48 +240,10 @@ public class FrmCenterNSupplyPeople extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No records found.", "Error",JOptionPane.WARNING_MESSAGE);
         }
         
-        try{
-            File file = new File("CenterSupplies.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            DefaultTableModel model = (DefaultTableModel)tblVaccineSupply.getModel();
-            Object[] lines = br.lines().toArray();
-            model.setRowCount(0); //Clear content in table
-            for(int i = 0; i<lines.length;i++){                
-                String[] row = lines[i].toString().split(";");
-                //if search text matches Appointment ID or account ID, display it
-                if(row[0].equals(centerID)){
-                    int vacCount = Integer.parseInt(row[2]);
-                    
-                    for(int j = 0; j<vacCount; j++){
-                        String[] loadVaccine = {row[(j+1)*3], row[1+(j+1)*3], row[2+(j+1)*3]};
-                        model.addRow(loadVaccine);
-                    }
-                }                
-            }
-        }
-        catch(IOException ex){
-            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
-        }
+        //Call Search Vaccination Center Method
+        People ppl = new People();
+        ppl.searchVaccineCenter(centerID);
         
-        try{
-            File file = new File("VaccinationCenter.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));           
-            Object[] lines = br.lines().toArray();
-            //Load records from text file row by row
-            for(int i = 0; i<lines.length;i++){
-                String[] row = lines[i].toString().split(";");
-                if(row[0].equals(centerID)){
-                    lblCenterID.setText(row[0]);
-                    lblCenterLocation.setText(row[1]);
-                    lblCenterDay.setText(row[2]);
-                    lblCenterTime.setText(row[3]);
-                }
-            }
-            br.close();
-        }
-        catch(IOException ex){
-            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
-        }
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -395,10 +307,10 @@ public class FrmCenterNSupplyPeople extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblCenterDay;
-    private javax.swing.JLabel lblCenterID;
-    private javax.swing.JLabel lblCenterLocation;
-    private javax.swing.JLabel lblCenterTime;
+    public static javax.swing.JLabel lblCenterDay;
+    public static javax.swing.JLabel lblCenterID;
+    public static javax.swing.JLabel lblCenterLocation;
+    public static javax.swing.JLabel lblCenterTime;
     public static javax.swing.JTable tblVaccineSupply;
     private javax.swing.JTextField txtSearchID;
     // End of variables declaration//GEN-END:variables

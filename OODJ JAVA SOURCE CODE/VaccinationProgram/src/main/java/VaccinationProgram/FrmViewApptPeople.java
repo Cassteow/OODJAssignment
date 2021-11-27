@@ -1,6 +1,7 @@
 
 package VaccinationProgram;
 
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -31,15 +32,16 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
         catch(IOException ex){
             JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
         }
-        Appointment appt = new Appointment(apptID);
-        //Call view appointment method from appointment class
-        String[] details = appt.viewAppointmentDetails(appt.appointmentID);
+        
+        //Call View Appointment Details Method
+        People ppl = new People();
+        String[] details = ppl.viewAppointmentDetails(frmAccID, apptID);
         lblAccountID.setText(details[0]);
         lblApptID.setText(details[1]);
         lblLocation.setText(details[2]);
         lblDate.setText(details[3]);
         lblTime.setText(details[4]);
-        lblVaccine.setText(details[5]);  
+        lblVaccine.setText(details[5]);
     }
 
     
@@ -216,8 +218,9 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
         int confirm = JOptionPane.showConfirmDialog(this, "Do you want to cancel the appointment?",
                 "Appointment Cancellation Confirmation", dialogButton);
         if(confirm == 0){
-            Appointment appt = new Appointment(apptID);
-            boolean cancelled = appt.cancelAppointment(apptID);
+            //Call Cancel Appointment Method
+            User u = new User();
+            boolean cancelled = u.cancelAppointment(apptID);
             if(cancelled == true){
                 JOptionPane.showMessageDialog(null, "Appointment is cancelled succesfully.", "Appointment Details Modified",JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
@@ -299,11 +302,11 @@ public class FrmViewApptPeople extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel lblAccountID;
-    private javax.swing.JLabel lblApptID;
-    private javax.swing.JLabel lblDate;
-    private javax.swing.JLabel lblLocation;
-    private javax.swing.JLabel lblTime;
-    private javax.swing.JLabel lblVaccine;
+    public static javax.swing.JLabel lblAccountID;
+    public static javax.swing.JLabel lblApptID;
+    public static javax.swing.JLabel lblDate;
+    public static javax.swing.JLabel lblLocation;
+    public static javax.swing.JLabel lblTime;
+    public static javax.swing.JLabel lblVaccine;
     // End of variables declaration//GEN-END:variables
 }
