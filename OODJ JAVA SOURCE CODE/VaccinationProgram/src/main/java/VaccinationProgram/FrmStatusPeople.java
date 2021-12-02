@@ -161,7 +161,7 @@ public class FrmStatusPeople extends javax.swing.JFrame {
 
     private void btnVaccineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaccineActionPerformed
         this.dispose();
-        new FrmCenterNSupplyPeople(frmAccID,name).setVisible(true);
+        new FrmVaccineInformationPeople(frmAccID,name).setVisible(true);
     }//GEN-LAST:event_btnVaccineActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed

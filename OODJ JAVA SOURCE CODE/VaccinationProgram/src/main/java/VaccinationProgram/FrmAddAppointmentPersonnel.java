@@ -33,6 +33,7 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnNext = new javax.swing.JButton();
         dcApptDate = new com.toedter.calendar.JDateChooser();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -74,6 +75,13 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
             }
         });
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,7 +93,9 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
+                        .addGap(21, 21, 21)
+                        .addComponent(btnBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
@@ -105,8 +115,10 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBack))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtAccountID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -153,7 +165,8 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
                     br.close();
                 }
                 catch(IOException ex){
-                    JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "There is an error in the system!"
+                            + "\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
                 }   break;
             case 1:
                 try{
@@ -246,6 +259,11 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
         new FrmAppointmentRecordsPersonnel(frmAccID, name).setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        new FrmAppointmentRecordsPersonnel(frmAccID, name).setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -280,6 +298,7 @@ public class FrmAddAppointmentPersonnel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnNext;
     private javax.swing.JComboBox<String> cmbLocation;
     private com.toedter.calendar.JDateChooser dcApptDate;

@@ -1,3 +1,3 @@
-SBJ;Stadium Bukit Jalil;Sun,Mon,Tue,Wed,Thu,Sat;9:00 am - 5:00 pm
-WTCKL;World Trade Center KL;Sun,Mon,Tue,Wed,Thu,Fri,Sat;9:00 am - 6:00 pm
+SBJ;Stadium Bukit Jalil;Sun,Mon,Tue,Wed,Thu,Sat;9:00 am - 6:00 pm
+WTCKL;World Trade Center KL;Sun,Mon,Tue,Wed,Thu,Fri,Sat;9:00 am - 9:00 pm
 SSA;Stadium Shah Alam;Sun,Mon,Tue,Wed,Thu,Fri,Sat;8:00 am - 6:00 pm

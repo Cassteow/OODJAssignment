@@ -333,9 +333,15 @@ public class FrmModifyCenterPersonnel extends javax.swing.JFrame {
             Personnel personnel = new Personnel();
             boolean modified = personnel.modifyCenterInfo();
             if(modified == true){
-                JOptionPane.showMessageDialog(null, "Vaccination Center information is modified succesfully.", "Vaccination Center Modified",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Vaccination Center information "
+                        + "is modified succesfully.", "Vaccination Center Modified",
+                        JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
                 new FrmCenterNSupplyPersonnel(frmAccID, name).setVisible(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Modification error!"
+                        + "\nPlease try again later", "Error",JOptionPane.ERROR_MESSAGE);
             }
         }
         else{

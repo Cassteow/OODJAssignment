@@ -182,7 +182,59 @@ public class Appointment {
         
         return vaccineAvailable;
     }
-    
+    //Method to check Vaccine availability
+    public boolean vaccineAvailability(String vacLocation, String vacName){
+        String[] vaccineSupply = new String[1];
+        boolean vaccineAvailable = false;
+        try{
+            File file = new File("CenterSupplies.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String checkLine = null;
+            while((checkLine = br.readLine())!=null){
+                String[] temp = checkLine.split(";");         
+                    if(temp[1].equals(vacLocation)){
+                        int vacCount = Integer.parseInt(temp[2]);
+                        int vacCountAvailable =0;
+                        
+                        //Get How many vaccines are available to initialize the vaccine position integer array
+                        for(int i = 1; i<=vacCount; i++){
+                            int vacSupply = Integer.parseInt(temp[2+(3*i)]);
+                            if(vacSupply>500){//Check whether there are enough supply
+                                vacCountAvailable +=1;
+                            }
+                        }
+                        //Get Position of vaccines available in the text file
+                        int[] vacPosition = new int[vacCountAvailable];
+                        int j = 0;
+                        for(int i = 1; i<=vacCount; i++){
+                            int vacSupply = Integer.parseInt(temp[2+(3*i)]);
+                            if(vacSupply>500){//Check whether there are enough supply
+                                vacPosition[j] = 1+(3*i);
+                                j +=1;
+                            }
+                        }
+                        
+                        //Get array of vaccine names available
+                        vaccineSupply = new String[vacCountAvailable];
+                        for(int i = 0; i<vacCountAvailable; i++){
+                            vaccineSupply[i] = temp[vacPosition[i]];
+                        }
+                        break;
+                    }
+            }
+            br.close();
+        }
+        catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+        }
+        //Check whether the particular vaccine has enough supply or
+        for(int i = 0; i<vaccineSupply.length; i++){
+            if(vaccineSupply[i].equals(vacName)){
+                vaccineAvailable = true;
+            }
+        }
+        return vaccineAvailable;
+    }
     //Method to Check Vaccination Center Appointment Limit
     public Boolean checkAppointmentLimit(String vacLocation, String vacDate){
         Boolean limitNotExceeded = false;

@@ -218,23 +218,28 @@ public class FrmAppointmentRecordsPersonnel extends javax.swing.JFrame {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String searchID = txtSearchID.getText();
-        try{
-            File file = new File("Appointment.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            DefaultTableModel model = (DefaultTableModel)tblApptRecords.getModel();
-            Object[] lines = br.lines().toArray();
-            model.setRowCount(0);
-            for(int i = 0; i<lines.length;i++){                
-                String[] row = lines[i].toString().split(";");
-                //if search text matches Appointment ID or account ID, display it
-                if(row[0].equals(searchID) || row[5].equals(searchID)){
-                    model.addRow(row);
-                }                
+        if(searchID.equals("")){
+            JOptionPane.showMessageDialog(null, "Search Field Is Empty.", "Error",JOptionPane.WARNING_MESSAGE);        
+        }else{
+            try{
+                File file = new File("Appointment.txt");
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                DefaultTableModel model = (DefaultTableModel)tblApptRecords.getModel();
+                Object[] lines = br.lines().toArray();
+                model.setRowCount(0);
+                for(int i = 0; i<lines.length;i++){                
+                    String[] row = lines[i].toString().split(";");
+                    //if search text matches Appointment ID or account ID, display it
+                    if(row[0].equals(searchID) || row[5].equals(searchID)){
+                        model.addRow(row);
+                    }                
+                }
+            }
+            catch(IOException ex){
+                JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
             }
         }
-        catch(IOException ex){
-            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
-        }
+        
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnViewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllActionPerformed

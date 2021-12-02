@@ -29,8 +29,14 @@ public class FrmAddAppointmentPeople extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnNext = new javax.swing.JButton();
         dcApptDate = new com.toedter.calendar.JDateChooser();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("COVID-19 Vaccination Appointment");
 
@@ -47,6 +53,13 @@ public class FrmAddAppointmentPeople extends javax.swing.JFrame {
             }
         });
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -54,7 +67,9 @@ public class FrmAddAppointmentPeople extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
+                        .addContainerGap()
+                        .addComponent(btnBack)
+                        .addGap(26, 26, 26)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(49, 49, 49)
@@ -75,8 +90,10 @@ public class FrmAddAppointmentPeople extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBack))
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cmbLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -173,7 +190,7 @@ public class FrmAddAppointmentPeople extends javax.swing.JFrame {
         if(verifyLimit == true){
             if(verifyAccountID == true){
                 if(verifyDay == true){
-                    this.setVisible(false);
+                    this.dispose();
                     new FrmSelectVaccineAppt(appt.accountID, appt.appointmentLocation,appt.appointmentDate, appt.appointmentTime, name, user, frmAccID, vaccineAvailable).setVisible(true);
                 }
                 else{
@@ -188,6 +205,16 @@ public class FrmAddAppointmentPeople extends javax.swing.JFrame {
                     + "\nPlease select another location or date for the appointment.", "Error",JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        new FrmPeopleMainMenu(frmAccID, name).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     
     public static void main(String args[]) {
@@ -224,6 +251,7 @@ public class FrmAddAppointmentPeople extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnNext;
     private javax.swing.JComboBox<String> cmbLocation;
     private com.toedter.calendar.JDateChooser dcApptDate;

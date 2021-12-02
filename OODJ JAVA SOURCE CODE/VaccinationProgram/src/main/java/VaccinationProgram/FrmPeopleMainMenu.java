@@ -129,7 +129,8 @@ public class FrmPeopleMainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registrationDetailBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationDetailBtnActionPerformed
-        // TODO add your handling code here:
+        new FrmViewRegistrationDetails(frmAccID, name, frmAccID, user).setVisible(true);
+        this.dispose();       
     }//GEN-LAST:event_registrationDetailBtnActionPerformed
 
     private void vaccinationAppointmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vaccinationAppointmentBtnActionPerformed

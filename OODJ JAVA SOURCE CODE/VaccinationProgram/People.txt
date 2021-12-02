@@ -1,4 +1,12 @@
-0121231234;123;John Smith;F123123;true;12-12-1990;0121231234;Selangor;false;true;Not Vaccinated
-0176871218;123;Cass Teow;F123455;true;27-03-2000;0176871218;Selangor;false;true;Partially Vaccinated
-0111231234;123;Lily Lee;F516516;true;16-05-1993;0111231234;Selangor;false;true;Partially Vaccinated
-0122223333;123;Nell Crain;F616616;true;18-09-1980;0122223333;Johor;false;true;Not Vaccinated
+0121231234;123;John Smith;F123123;Non-Citizen;12-12-1990;0121231234;Selangor;No;Yes;Not Vaccinated
+0176871218;123;Cassandrea Teow;000327141172;Citizen;27-03-2000;0176871218;Selangor;No;Yes;Partially Vaccinated
+0111231234;123;Lily Lee;F511212345;Non-Citizen;16-01-1993;0111231234;Selangor;No;Yes;Fully Vaccinated
+0122223333;123;Nell Crain;F616616;Non-Citizen;18-09-1980;0122223333;Johor;No;Yes;Not Vaccinated
+0111112222;123;James Bond;900102101123;Citizen;02-01-1991;0111112222;Selangor;No;Yes;Not Vaccinated
+0123336666;123;Phoebe Buffay;F1828191000;Non-Citizen;11-12-1970;0123336666;Kedah;No;Yes;Not Vaccinated
+0121112222;123;Muhammad Ali;0012240101111;Citizen;24-12-2000;0121112222;W.P. Kuala Lumpur;No;Yes;Not Vaccinated
+0198889999;123;Jake Peralta;F12124567234;Non-Citizen;18-12-2005;0198889999;W.P. Putrajaya;No;Yes;Not Vaccinated
+0198887777;123;Sunita Kaur;991010011110;Citizen;10-10-1999;0198887777;Selangor;No;Yes;Not Vaccinated
+0176665555;123;Donald Trump;US183910001;Non-Citizen;23-12-1988;0176665555;W.P. Labuan;No;Yes;Not Vaccinated
+0176667777;S123;Stephanie Wong;010111101121;Non-Citizen;07-01-2001;0176667777;Selangor;No;Yes;Partially Vaccinated
+0187778888;123;Sashal Deestance;F123123;Non-Citizen;16-01-2001;0187778888;Sarawak;No;Yes;Not Vaccinated
