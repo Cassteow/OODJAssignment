@@ -1,7 +1,6 @@
 
 package VaccinationProgram;
 
-import static VaccinationProgram.FrmAddRegistration.dateChooserDOB;
 import static VaccinationProgram.FrmMainLogin.cmbBoxUser;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

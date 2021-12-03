@@ -495,10 +495,17 @@ public class FrmModifyRegistrationPersonnel extends javax.swing.JFrame {
                 
                 //Update Vaccination Status to Partially Vaccination --> 
                 //Direct to make another appointment immediately
-                if(cmbBoxVac.getSelectedIndex() == 1) {
-                    new Frm2ndAppt(accID, name, frmAccID).setVisible(true);
-                    this.dispose();
-                }else{
+                if(!lblStatus.getText().equals(cmbBoxVac.getItemAt(cmbBoxVac.getSelectedIndex()))){
+                    if(cmbBoxVac.getSelectedIndex() == 1) {
+                        new Frm2ndAppt(accID, name, frmAccID).setVisible(true);
+                        this.dispose();
+                    }
+                    else{
+                        new FrmRegistrationRecordsPersonnel(frmAccID, name).setVisible(true); 
+                        this.dispose();
+                    }
+                }
+                else{
                     new FrmRegistrationRecordsPersonnel(frmAccID, name).setVisible(true); 
                     this.dispose();
                 }

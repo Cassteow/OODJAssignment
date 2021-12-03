@@ -290,71 +290,76 @@ public class Frm2ndAppt extends javax.swing.JFrame {
                 break;
         }
         
-        //Get Appointment Date
-        Date date = dcApptDate.getDate();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        vacDate = df.format(date);
-        
-        //create new appointment class object
-        Appointment appt = new Appointment(accID, vacDate, vacTime, vacLocation);
-        //Check the availability of the vaccine
-        boolean vaccineAvailable = appt.vaccineAvailability(vacLocation, vacName);              
-        //Use Method to ensure center do not exceed appointment limit
-        boolean verifyLimit = appt.checkAppointmentLimit(vacLocation, vacDate);
-        //Use Method to verify date of appointment
-        boolean verifyDay = appt.verifyApptDay(dcApptDate.getDate(), vacLocation);
-        
-        //Call FrmSelectVaccine if all conditions are validated
-        if(verifyLimit == true){
-            if(verifyDay == true){
-                if(vaccineAvailable == true){
-                    //Confirm Modified Appointment Details from user
-                    int dialogButton = JOptionPane.YES_NO_OPTION;
-                    int confirm = JOptionPane.showConfirmDialog(this, "Please confirm your 2nd appointment details below:"
-                                    + "\nAppointment ID: "+apptID+"\nDate: "+vacDate+"\nTime: "+vacTime+"\nLocation: "+vacLocation
-                                    +"\nVaccine Name: "+vacName+"\nAccount ID: "+accID,
-                                    "Appointment Details Confirmation", dialogButton);
-                    if(confirm == 0){
-                        User u = new User();
-                        //Modify appointment to the 2nd appointment details
-                        boolean modified = u.modifyAppointment(apptID, vacDate, vacTime, vacLocation, vacName, accID);
-                        if(modified == true){
-                            JOptionPane.showMessageDialog(null, "Appointment is modified succesfully.", "Appointment Details Modified",JOptionPane.INFORMATION_MESSAGE);
-                            new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
-                            this.dispose();               
+        try{
+            //Get Appointment Date
+            Date date = dcApptDate.getDate();
+            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+            vacDate = df.format(date);
+             //create new appointment class object
+            Appointment appt = new Appointment(accID, vacDate, vacTime, vacLocation);
+            //Check the availability of the vaccine
+            boolean vaccineAvailable = appt.vaccineAvailability(vacLocation, vacName);              
+            //Use Method to ensure center do not exceed appointment limit
+            boolean verifyLimit = appt.checkAppointmentLimit(vacLocation, vacDate);
+            //Use Method to verify date of appointment
+            boolean verifyDay = appt.verifyApptDay(dcApptDate.getDate(), vacLocation);
+            
+            //Call FrmSelectVaccine if all conditions are validated
+            if(verifyLimit == true){
+                if(verifyDay == true){
+                    if(vaccineAvailable == true){
+                        //Confirm Modified Appointment Details from user
+                        int dialogButton = JOptionPane.YES_NO_OPTION;
+                        int confirm = JOptionPane.showConfirmDialog(this, "Please confirm your 2nd appointment details below:"
+                                        + "\nAppointment ID: "+apptID+"\nDate: "+vacDate+"\nTime: "+vacTime+"\nLocation: "+vacLocation
+                                        +"\nVaccine Name: "+vacName+"\nAccount ID: "+accID,
+                                        "Appointment Details Confirmation", dialogButton);
+                        if(confirm == 0){
+                            User u = new User();
+                            //Modify appointment to the 2nd appointment details
+                            boolean modified = u.modifyAppointment(apptID, vacDate, vacTime, vacLocation, vacName, accID);
+                            if(modified == true){
+                                JOptionPane.showMessageDialog(null, "Appointment is modified succesfully.", "Appointment Details Modified",JOptionPane.INFORMATION_MESSAGE);
+                                new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
+                                this.dispose();               
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
+                                cmbLocation.requestFocusInWindow();        
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Operation cancelled!\n"
+                                    + "Please fill in the details for the 2nd Appointment now.", 
+                                    "Appointment",JOptionPane.INFORMATION_MESSAGE);
+                            cmbLocation.requestFocusInWindow();      
                         }
-                        else{
-                            JOptionPane.showMessageDialog(null, "There is an error in the system!\nPlease try again later.", "Error",JOptionPane.WARNING_MESSAGE);
-                            cmbLocation.requestFocusInWindow();        
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Operation cancelled!\n"
-                                + "Please fill in the details for the 2nd Appointment now.", 
-                                "Appointment",JOptionPane.INFORMATION_MESSAGE);
-                        cmbLocation.requestFocusInWindow();      
+                        
                     }
-                    
+                    //Not enough vaccines for the selected location
+                    else{
+                        JOptionPane.showMessageDialog(null, "Running low on vaccine supply!\nPlease select another location instead!", 
+                                "Error",JOptionPane.WARNING_MESSAGE);
+                        cmbLocation.requestFocusInWindow();
+                    }
                 }
-                //Not enough vaccines for the selected location
+                //User selected date that is not during operating hours
                 else{
-                    JOptionPane.showMessageDialog(null, "Running low on vaccine supply!\nPlease select another location instead!", 
-                            "Error",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Selected Date is not available!\n Please select another date!", 
+                        "Error",JOptionPane.WARNING_MESSAGE);
                     cmbLocation.requestFocusInWindow();
                 }
             }
-            //User selected date that is not during operating hours
+            //Selected vaccination center is fully booked for the selected date
             else{
-                JOptionPane.showMessageDialog(null, "Selected Date is not available!\n Please select another date!", 
-                        "Error",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The vaccination center is fully booked for the selected date."
+                        + "\nPlease select another location or date for the appointment.", "Error",JOptionPane.WARNING_MESSAGE);
                 cmbLocation.requestFocusInWindow();
             }
         }
-        //Selected vaccination center is fully booked for the selected date
-        else{
-            JOptionPane.showMessageDialog(null, "The vaccination center is fully booked for the selected date."
-                    + "\nPlease select another location or date for the appointment.", "Error",JOptionPane.WARNING_MESSAGE);
-            cmbLocation.requestFocusInWindow();
-        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Please select a date!", 
+                        "Error",JOptionPane.WARNING_MESSAGE);
+        }     
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
