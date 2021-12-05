@@ -9,6 +9,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -234,6 +237,7 @@ public class People extends User{
        boolean modified = false;
        try{
             Date date1 = FrmModifyRegistrationPeople.dateChooserDOB.getDate();
+            int age = Period.between(date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now()).getYears();
             SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
             DOB = df.format(date1);
             FullName = FrmModifyRegistrationPeople.txtBoxName.getText();
@@ -295,6 +299,10 @@ public class People extends User{
             else if (!Password.equals(RePassword) || Password.equals(""))
             {
                 JOptionPane.showMessageDialog(null, "Invalid Password!", "Error",JOptionPane.WARNING_MESSAGE);
+            }
+            //Less than 12 Years Old
+            else if(age<12){
+                JOptionPane.showMessageDialog(null, "The COVID-19 Vaccine is only available for those who are 12 and above!", "Error",JOptionPane.WARNING_MESSAGE);
             }
             //Invalid Medical History (not suitable for program)
             else if(HealthStat.equals("Yes"))

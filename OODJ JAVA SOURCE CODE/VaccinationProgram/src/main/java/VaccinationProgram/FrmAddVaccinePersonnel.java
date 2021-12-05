@@ -195,7 +195,7 @@ public class FrmAddVaccinePersonnel extends javax.swing.JFrame {
             Personnel psn = new Personnel();
             boolean add = psn.addVaccine(vacID, vacName, vacCOO, vacDoses);
             if(add == true){
-                JOptionPane.showMessageDialog(null, "Vaccine information is modified successfully.", "Vaccine Modified",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Vaccine information is added successfully.", "New Vaccine",JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
                 new FrmVaccineInformationPersonnel(frmAccID,name).setVisible(true);
             }

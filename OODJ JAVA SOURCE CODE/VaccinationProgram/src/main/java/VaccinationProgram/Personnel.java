@@ -10,6 +10,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -379,6 +382,7 @@ public class Personnel extends User{
        boolean modified = false;
        try{
             Date date1 = FrmModifyRegistrationPersonnel.dateChooserDOB.getDate();
+            int age = Period.between(date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now()).getYears();
             SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
             DOB = df.format(date1);
             FullName = FrmModifyRegistrationPersonnel.txtBoxName.getText();
@@ -444,6 +448,10 @@ public class Personnel extends User{
             else if(HealthStat.equals("Yes"))
             {
                 JOptionPane.showMessageDialog(null, "Please Consult A Healthcare Professional Before Registering!", "Error",JOptionPane.WARNING_MESSAGE);
+            }
+            //Less than 12 Years Old
+            else if(age<12){
+                JOptionPane.showMessageDialog(null, "The COVID-19 Vaccine is only available for those who are 12 and above!", "Error",JOptionPane.WARNING_MESSAGE);
             }
             //Disagree to TnC
             else if (TnC.equals("No"))

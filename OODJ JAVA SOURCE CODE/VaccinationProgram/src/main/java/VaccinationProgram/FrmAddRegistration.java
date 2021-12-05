@@ -252,7 +252,7 @@ public class FrmAddRegistration extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void peopleAddRegisterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_peopleAddRegisterBtnActionPerformed
-        
+               
         //Ask for user confirmation to add new registration
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int confirm = JOptionPane.showConfirmDialog(this, "Do you want to confirm the new registration?",
@@ -273,7 +273,7 @@ public class FrmAddRegistration extends javax.swing.JFrame {
                     new FrmPersonnelMainMenu(frmAccID, name).setVisible(true);
                     this.dispose();
                 }
-                else{
+                else if((userType == "People")){
                     JOptionPane.showMessageDialog(null, "Registration is successful!\n"
                             + "\nAccount ID: "+peopleRegistrationPhoneNumberTxtBox.getText()+"\nFull Name: "+peopleRegistrationFullNameTxtBox.getText()
                             +"\nIC or Passport No: "+peopleRegistrationIdentityCardTxtBox.getText()

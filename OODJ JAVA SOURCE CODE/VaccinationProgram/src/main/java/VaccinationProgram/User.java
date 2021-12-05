@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;     
-
+import java.time.*;
 
 public class User {
     protected String accountID;
@@ -233,6 +233,7 @@ public class User {
         try{
             //Assign variables with information from form
             Date date = FrmAddRegistration.dateChooserDOB.getDate();
+            int age = Period.between(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now()).getYears();
             SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
             DOB = df.format(date);
             FullName = (peopleRegistrationFullNameTxtBox.getText());
@@ -293,6 +294,10 @@ public class User {
             else if(HealthStat.equals("Yes"))
             {
                 JOptionPane.showMessageDialog(null, "Please Consult A Healthcare Professional Before Registering!", "Error",JOptionPane.WARNING_MESSAGE);
+            }
+            //Less than 12 Years Old
+            else if(age<12){
+                JOptionPane.showMessageDialog(null, "The COVID-19 Vaccine is only available for those who are 12 and above!", "Error",JOptionPane.WARNING_MESSAGE);
             }
             //Disagree to TnC
             else if (TnC.equals("No"))
