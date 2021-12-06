@@ -299,8 +299,21 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
 
     private void btnModifySupplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifySupplyActionPerformed
         String centerID = lblCenterID.getText();
+        boolean checkDigit = true;
+        for(int i = 0; i<tblVaccineSupply.getRowCount(); i++){
+            try{
+                int digit = Integer.parseInt(FrmCenterNSupplyPersonnel.tblVaccineSupply.getValueAt(i, 2).toString());
+            }
+            catch(NumberFormatException e){
+                     e.printStackTrace();
+                     checkDigit = false;
+            }   
+        }
         if(centerID == ""){
             JOptionPane.showMessageDialog(null, "Please select a Vaccination Center to proceed!", "Error",JOptionPane.ERROR_MESSAGE);
+        }
+        else if(checkDigit == false){
+            JOptionPane.showMessageDialog(null, "Please enter digit input only for the Vaccine Supply!", "Error",JOptionPane.WARNING_MESSAGE);
         }
         else{
             //Confirm Modified Appointment Details from user
@@ -315,9 +328,7 @@ public class FrmCenterNSupplyPersonnel extends javax.swing.JFrame {
                 if(modified == true){
                     JOptionPane.showMessageDialog(null, "Vaccine supply is updated!", "Modification Successful",JOptionPane.INFORMATION_MESSAGE);
                 }
-                else{
-                    JOptionPane.showMessageDialog(null, "Please ensure only numbers are entered!", "Error",JOptionPane.ERROR_MESSAGE);
-                }
+                
             }
             else{
                 JOptionPane.showMessageDialog(null, "Operation cancelled!", "Appointment",JOptionPane.INFORMATION_MESSAGE);
